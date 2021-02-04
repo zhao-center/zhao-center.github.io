@@ -1,0 +1,67 @@
+:root {
+    --background-color: #fdfdfb;
+}
+#main .title {
+    --hyperlink-color: #261b0d;
+}
+#footer {
+    --hyperlink-color: #261b0d;
+}
+#footer a {
+    --hyperlink-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #000;
+    }
+    #main .title {
+        --hyperlink-color: #eee;
+    }
+    #footer {
+        --hyperlink-color: #808080;
+    }
+    #footer a {
+        --hyperlink-color: #999;
+    }
+}
+
+html {
+    font-size: 16px;
+    overflow-y:auto;
+    background-color: var(--background-color);
+}
+
+body {
+    font: 1em monospace;
+    line-height: 1.75;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    text-decoration: none;
+}
+#main .title > a {
+    color: var(--hyperlink-color);
+    text-decoration: none;
+}
+#footer {
+    color: var(--hyperlink-color);
+}
+#footer a {
+    color: var(--hyperlink-color);
+}
+#footer a:hover {
+    background-color: var(--hyperlink-color); color: var(--background-color);
+}
+
+.blink-content {
+    animation: blink 2s ease infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>如何備份GPG密鑰 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="備份, 計算機, 加密, 安全, GPG">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>如何備份GPG密鑰</h1>
+    <h4><time datetime="2017-12-26">2017-12-26</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#intro">前言</a></li>
+<li><a href="#full-gpg-backup">備份全部GPG密鑰</a>
+<ul>
+<li><a href="#export">導出密鑰</a></li>
+<li><a href="#import">導入密鑰</a></li>
+</ul>
+</li>
+<li><a href="#sum">總結</a></li>
+</ul>
+<h1><h id="intro"> 前言 </h></h1>
+<p>GPG是注重安全的小夥伴最應該使用的工具，同時也是Linux下面很常見的工具，其備份自然也是一件非常重要的事情。即使GPG密鑰在yubikey裡面，也需要將指向yubikey的GPG密鑰進行備份（延展閱讀：可以通過筆者的這篇文章去了解如何<a href="https://zhao.center/post/gpgkey-generate-and-yubikey/" target="_blank" rel="noopener noreferrer nofollow">「本地生成GPG密鑰並使用yubikey」</a>）。如果遺忘備份GPG密鑰或者沒有將密鑰全部備份可能會造成很大的損失。這篇文章就是簡單的講述一下如何備份GPG密鑰。</p>
+<p>一如既往筆者只是記錄最為簡單的GPG密鑰備份方法，想要更多更詳細方法的小夥伴可以參考如下兩篇文章：</p>
+<ul>
+<li><a href="https://msol.io/blog/tech/back-up-your-pgp-keys-with-gpg/" target="_blank" rel="noopener noreferrer nofollow">「Back up your PGP keys with GPG」</a></li>
+<li><a href="https://gist.github.com/chrisroos/1205934" target="_blank" rel="noopener noreferrer nofollow">「Instructions for exporting/importing (backup/restore) GPG keys」</a></li>
+</ul>
+<h1><h id="full-gpg-backup"> 備份全部GPG密鑰 </h></h1>
+<p>以下方法用於備份所有GPG密鑰的所有信息：</p>
+<h3><h id="export"> 導出密鑰 </h></h3>
+<p>如下命令用來導出ASCII-armored版本的備份：</p>
+<pre><code class="language-bash">gpg --armor --export &gt; pgp-public-keys.asc
+gpg --armor --export-secret-keys &gt; pgp-private-keys.asc
+gpg --export-ownertrust &gt; pgp-ownertrust.asc
+</code></pre>
+<p>導出之後一定要將這三個文件存放到一個安全、穩定的地方（例如：外界無法接觸的移動硬盤或者安全係數較高的電腦，等等）</p>
+<h3><h id="import"> 導入密鑰 </h></h3>
+<p>當我們需要導入的時候只需要在這三個文件存放的路徑下運行：</p>
+<pre><code class="language-bash">gpg --import pgp-public-keys.asc
+gpg --import pgp-private-keys.asc
+gpg --import-ownertrust pgp-ownertrust.asc
+</code></pre>
+<p>這樣就完成了備份到恢復的全過程～</p>
+<h1><h id="sum"> 總結 </h></h1>
+<p>備份GPG密鑰的方法總結其實就是這麼的簡單，關鍵還是要養成一個良好的備份習慣（比如：定期備份、安全存放備份，等等），這樣我們才可以避免GPG使用過程中不必要的損失。更多的，有能力的小夥伴應該多多向身邊的朋友推薦GPG密鑰，這樣不僅可以提升日常生活中各種場景的安全係數，同時也為更加良好安全的網絡環境作出了一份貢獻（最為簡單的例子就是「package manager」中GPG密鑰的應用）。望諸位安好(´,,•ω•,,)♡</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

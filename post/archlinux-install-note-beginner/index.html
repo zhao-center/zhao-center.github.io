@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>假裝用Arch Linux：學徒安裝筆記 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="初學者, 系統安裝, Arch Linux, Linux, GNOME, gnome, Antergos, Numix, gnome-tweak-tool, Source Code Pro, IBus, Dash to Dock">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>假裝用Arch Linux：學徒安裝筆記</h1>
+    <h4><time datetime="2017-05-13">2017-05-13</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#why-arch">為什麼選擇Arch？</a></li>
+<li><a href="#antergos">第一步：第一步：Antergos和網絡</a></li>
+<li><a href="#cli2gnome">第二步：從CLI到GNOME</a></li>
+<li><a href="#network">第三步：配置網絡</a></li>
+<li><a href="#personalization">第四步：個性化設置</a>
+<ul>
+<li><a href="#touchpad">觸控板</a></li>
+<li><a href="#tweak">gnome-tweak-tool</a>
+<ul>
+<li><a href="#dark-theme-mode">開啟「Dark Theme」模式</a></li>
+</ul>
+</li>
+<li><a href="#numix">安裝Numix圖標</a></li>
+<li><a href="#source-code-pro">安裝Source Code Pro字體</a></li>
+<li><a href="#ibus">安裝中文輸入Ibus</a>
+<ul>
+<li><a href="#Chinese-support">中文支持和字體安裝</a></li>
+<li><a href="#ibus-install">Ibus安裝</a></li>
+</ul>
+</li>
+<li><a href="#dash-to-dock">安裝「Dash to Dock」</a></li>
+<li><a href="#app-recommend">推薦安裝應用</a>
+<ul>
+<li><a href="#desktop-apps">桌面應用</a></li>
+<li><a href="#gnome3-extensions">GNOME3插件</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sum">總結</a></li>
+</ul>
+<p>筆者近期將系統更換成了「Arch Linux」，因爲在安裝中屢次出現問題，可能是因爲硬件太新出現了許多麻煩，沒有一次安裝正常。</p>
+<p>最終爲了使用arch，決定曲線救國選擇從antergos安裝到自己配置這條道路。</p>
+<p>筆者有嚴重的系統潔癖，這也是爲什麼選擇使用arch的一大原因，antergos絕非純淨的改版，但是因爲arch屢次沒有安裝成功，且arch-anywhere無法正常使用，最後選擇從antergos安裝。</p>
+<p>無論採用什麼方法什麼途徑安裝，一定要記住：</p>
+<ul>
+<li>「Arch Linux」是目前最適合普通用戶的發行版(Distro)</li>
+<li><a href="https://wiki.archlinux.org" target="_blank" rel="noopener noreferrer nofollow">「Arch Wiki」</a>可以解決幾乎所有問題，如果沒有解決多半是自己的問題，請重新閱讀<a href="https://wiki.archlinux.org" target="_blank" rel="noopener noreferrer nofollow">wiki</a></li>
+</ul>
+<h1><h id="why-arch"> 為什麼選擇Arch？ </h></h1>
+<p>在進行安裝步驟之前筆者先闡述一下為什麼要使用「Arch Linux」，arch最吸引我的是它的簡單，主要體現在兩個方面：首先，是安裝過程的簡單，相比於其他高度定製化的發行版(distro)，例如Gentoo，arch的安裝較為簡單，而且憑藉其強大的wiki以及龐大的用戶群，安裝對於初學者來說只是耐心的問題。其次，是系統結構的簡單，因為arch的一切都是由安裝者本身決定，所以不會像其他系統那樣存在刪除預裝軟件的煩惱。而且，因為arch近幾年的飛速發展，更加適合新手向的arch-anywhere也是一個很不錯的選擇。</p>
+<p>另一個亮點，也是最為吸引筆者的一點就是arch的包管理(Package Management)系統，叫做pacman，相比於之前的包管理系統arch本身更加激進，首先，它吸收了APT系和YUM等系的優點，取其精華，去其糟粕，使用體驗得以大幅度的提升，其次是它的滾動更新機制讓用戶和開發者之間沒有界線，軟件一旦發布立即更新，不再像前輩distro那樣保守，實際上這反而給用戶帶來了更為穩定的體驗（雖然前一段時間的幾個更新有幾個包部分功能失效，但是幾天后便修復了），如今pacman的優勢被越來越多的開發者所青睞也是有其中的原因的。</p>
+<p>為什麼不是其它distro？在arch之前，有很多偉大的distro，比如RedHat使人們意識到自由軟件(Free Software)是可以盈利的，Debain讓人們見識到了更親民的Linux,Ubuntu繼續探索了Linux的商業潛質，並且豐富了多平台，添加了軟件市場，讓普通用戶更加易於接受，還有很多很多的先輩們作出了無法估量的貢獻，雖然有一些筆者並不是很喜歡，但是這些無疑推動了Linux的發展，需要我們去銘記，然而arch是一個新的標誌，正如我之前所說：「Arch Linux」是目前最適合普通用戶的發行版(Distro)。因為它兼顧了系統的純凈與易用，帶來了更加富有活力的使用體驗。</p>
+<h1><h id="antergos"> 第一步：Antergos和網絡 </h></h1>
+<p>筆者雖然退而求其次，然而還是有一定執念的，所以在安裝的時候選擇base版本，這樣的好處是減少了antergos自帶的GUI應用。</p>
+<p><em><p style="color: red">注意：在安裝的時候最好對系統進行加密，要不Linux下只要有物理接觸就基本可以隨意讀取數據</p></em></p>
+<p>安裝完base版本後我們會意識到一個嚴重的問題，那就是沒有網絡。所以，我們的首要任務就是讓電腦鏈接到網絡，Arch的官方Wiki對於如何連接網絡已經進行了非常詳細的介紹：</p>
+<ul>
+<li>基本網絡配置概述：<a href="https://wiki.archlinux.org/index.php/installation_guide#Connect_to_the_Internet" target="_blank" rel="noopener noreferrer nofollow">https://wiki.archlinux.org/index.php/installation_guide#Connect_to_the_Internet</a></li>
+<li>無線網絡配置：<a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration" target="_blank" rel="noopener noreferrer nofollow">https://wiki.archlinux.org/index.php/Wireless_network_configuration</a></li>
+</ul>
+<p>在這裡筆者僅簡單的介紹一下無線網絡連接的方法，首先是自動生成一個配置文件：</p>
+<pre><code class="language-bash">$ sudo wifi-menu
+</code></pre>
+<p>選擇我們想要連接的網絡，按照提示完成設置。然後，我們查看一下配置文件(profile)是否已經生成：</p>
+<pre><code class="language-bash">$ ls /etc/netctl
+</code></pre>
+<p>我們可以看到我們剛剛設置想要連接的wifi的名字，如果不放心還可以查看一下配置文件的具體信息是否正確，然後就可以檢測配置文件是否能正常使用了：</p>
+<pre><code class="language-bash">$ netctl start 配置文件名(profile)
+</code></pre>
+<p>如果運行成功（也就是我們可以連接網絡），我們就可以執行：</p>
+<pre><code class="language-bash">$ netctl enable 配置文件名(profile)
+</code></pre>
+<p>到這裡我們就已經連接到互聯網了，筆者建議先查看是否有軟件需要更新：</p>
+<pre><code class="language-bash">$ sudo pacman -Syu
+</code></pre>
+<p>到這裡為止，我們的準備工作就正式結束了。</p>
+<h1><h id="cli2gnome"> 第二步：從CLI到GNOME </h></h1>
+<p>首先是alsa這是一個音頻控件：</p>
+<pre><code class="language-bash">$ sudo pacman -S alsa-utils
+</code></pre>
+<p>安裝成功測試一下，這個意義倒是不大，但是直接就可以看到圖形化(GUI)界面：</p>
+<pre><code class="language-bash">$ alsamixer
+</code></pre>
+<p>下面是xorg和相關包的安裝：</p>
+<pre><code class="language-bash">$ sudo pacman -S xorg-server xorg-xinit //xorg-server-utils（已經被移除）
+
+$ sudo pacman -S xorg-xclock xterm
+
+$ sudo pacman -S xorg-twm
+</code></pre>
+<p>基本的GUI環境就已經配置好了～那麼現在啓動一下X吧：</p>
+<pre><code class="language-bash">$ startx
+</code></pre>
+<p>接下來裝個字體：</p>
+<pre><code class="language-bash">$ sudo pacman -S ttf-dejavu
+</code></pre>
+<p>然後就可以開心的安裝GNOME了：</p>
+<pre><code class="language-bash">$ sudo pacman -S gnome
+</code></pre>
+<p>如果不喜歡xterm或者gnome自帶的terminal的話可以嘗試安裝lxterminal：</p>
+<pre><code class="language-bash">$ sudo pacman -S lxterminal
+</code></pre>
+<p>好了，下面啓用gnome吧</p>
+<pre><code class="language-bash">$ systemctl enable gdm.service
+</code></pre>
+<p>啓用完畢，重啓一下吧：</p>
+<pre><code class="language-bash">$ reboot
+</code></pre>
+<p>重啓完畢！是不是有了電腦桌面的感覺？</p>
+<p>到這裏應該是完全安裝成功，但是筆者的安裝中還有一些小問題，將在之後的步驟中解決：</p>
+<h1><h id="network"> 第三步：配置網絡 </h></h1>
+<p>安裝GNOME成功之後我們就可以直接使用GNOME自帶的網絡設置服務了，所以禁用一下之前的網絡配置方法：</p>
+<pre><code class="language-bash">$ netctl disable 配置文件名(profile)
+</code></pre>
+<p>因爲重啓之後沒有網絡，發現是GNOME的網絡服務(NetworkManager.service)沒有開啓，所以手動啓動一下：</p>
+<pre><code class="language-bash">$ systemctl enable NetworkManager.service
+</code></pre>
+<p>然後我們可以重啓一下，或者輸入一下命令：</p>
+<pre><code class="language-bash">$ systemctl start NetworkManager.service
+</code></pre>
+<p>網絡就可以使用了！</p>
+<h1><h id="personalization"> 第四步：個性化設置 </h></h1>
+<h2><h id="touchpad"> 觸控板 </h></h2>
+<p>安裝之後發現觸控板無法點擊，只能進行移動，發現是設置問題：在 All Setting &gt;&gt; Mouse &amp; Touchpad 中，選擇開啓 Tap to Click</p>
+<p>還有很多其它設置，可以根據喜好更改</p>
+<h2><h id="tweak"> gnome-tweak-tool </h></h2>
+<p>GNOME中的很多個性化設置需要這個工具，所以在進行下面步驟之前先進行安裝：</p>
+<pre><code class="language-bash">$ sudo pacman -S gnome-tweak-tool
+</code></pre>
+<h3><h id="dark-theme-mode"> 開啟「Dark Theme」模式 </h></h3>
+<p>筆者近期(2018年6月)發現「Gnome Tweak Tool」裡面的「Global Dark Theme」的選項不見了，在經過一番尋找之後終於發現了選項不見的原因和解決的辦法。一如既往，筆者先留下出處：</p>
+<ul>
+<li><a href="https://jeremy.bicha.net/2017/08/29/gnome-tweaks-3-25-91/" target="_blank" rel="noopener noreferrer nofollow">作者的升級公告</a></li>
+<li><a href="https://askubuntu.com/questions/806200/how-can-you-enable-gtk3-themes-dark-theme-mode-when-using-unity-7" target="_blank" rel="noopener noreferrer nofollow">How can you enable GTK3 themes’ dark theme mode?</a></li>
+</ul>
+<p>簡單來說，「Tweak Tool」的作者覺得這個功能不完善且已經有很多替代的方法，所以就給刪除了（具體解釋可以點進上面的原文鏈接查看）。還好我們可以直接通過修改配置文件將手動開啟「Dark Theme」模式（以下步驟直接翻譯英文原文回答）。</p>
+<p>第一步，打開配置文件：</p>
+<pre><code class="language-bash">$ gedit ~/.config/gtk-3.0/settings.ini
+</code></pre>
+<p>第二步，將這一段複製到配置文件：</p>
+<pre><code class="language-ini">[Settings]
+gtk-application-prefer-dark-theme=1
+</code></pre>
+<p>這樣我們就可以開啟「Dark Theme」模式了。但是，原先這個所謂的「Global Dark Theme」其實只是針對GTK3的一個功能，相信細心的同學已經看出來了，所以筆者一般都是會輔助其他的主題進行使用，比如之後提到的「Numix」或者「Adapta」，「Arc」等等。</p>
+<h2><h id="numix"> 安裝Numix圖標 </h></h2>
+<p>Numix是一個很有風格的主題(theme)很適合GNOME，而且在arch裏有官方的包，所以推薦安裝：</p>
+<p><del>$ sudo pacman -S numix-themes</del> （package的名稱改為下面的名稱）</p>
+<pre><code class="language-bash">$ sudo pacman -S numix-gtk-theme
+</code></pre>
+<p>圖標主題(icon theme)個人推薦square那版（這個icon主題在正常的「Arch Linux」中無法安裝，因為Numix的icon是付費的，因為和Antergos合作才可以直接這樣安裝）</p>
+<pre><code class="language-bash">$ sudo pacman -S numix-icon-theme
+</code></pre>
+<pre><code class="language-bash">$ sudo pacman -S numix-icon-theme-square
+</code></pre>
+<p>然後使用「tweak tool」進行選擇就可以了</p>
+<h2><h id="source-code-pro"> 安裝Source Code Pro字體 </h></h2>
+<p>這個字體非常適合編程時使用：</p>
+<pre><code class="language-bash">$ sudo pacman -S adobe-source-code-pro-fonts
+</code></pre>
+<p>各位看官也可以找找自己喜歡的字體，畢竟編程的時候看着舒服</p>
+<h2><h id="ibus"> 安裝中文輸入Ibus </h></h2>
+<p>參考：</p>
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/Arch_Linux_Localization_(简体中文)" target="_blank" rel="noopener noreferrer nofollow">Arch Linux Localization (简体中文)</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/IBus_(简体中文)" target="_blank" rel="noopener noreferrer nofollow">IBus (简体中文)</a></li>
+</ul>
+<h3><h id="Chinese-support"> 中文支持和字體安裝 </h></h3>
+<p>請見第一個參考鏈接</p>
+<p>個人推薦嘗試<code>wqy-zenhei</code>作爲日常使用，如果喜歡古漢語或者從事漢字研究則可能需要用到<code>ttf-hanazono</code></p>
+<h3><h id="ibus-install"> Ibus安裝 </h></h3>
+<p>首先先安裝一下基礎程序</p>
+<pre><code class="language-bash">$ sudo pacman -S ibus
+</code></pre>
+<p>安裝自己喜歡的輸入法：</p>
+<pre><code class="language-bash">$ sudo pacman -S ibus-libpinyin
+$ sudo pacman -S ibus-rime
+</code></pre>
+<p>安裝完畢後先初始化一下:</p>
+<pre><code class="language-bash">$ ibus-setup
+</code></pre>
+<p>然後就可以放心使用了～</p>
+<h2><h id="dash-to-dock"> 安裝「Dash to Dock」 </h></h2>
+<ul>
+<li><a href="https://micheleg.github.io/dash-to-dock/index.html" target="_blank" rel="noopener noreferrer nofollow">「Dask to Dock」官網</a></li>
+</ul>
+<p>從git上克隆資源：</p>
+<pre><code class="language-bash">$ git clone https://github.com/micheleg/dash-to-dock.git
+</code></pre>
+<p>編譯&amp;&amp;安裝：</p>
+<pre><code class="language-bash">$ make
+$ make install
+</code></pre>
+<p>然後在「tweak tool」上開啓這個extension就可以了</p>
+<h2><h id="app-recommend"> 推薦安裝應用 </h></h2>
+<h3><h id="desktop-apps"> 桌面應用 </h></h3>
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/firefox" target="_blank" rel="noopener noreferrer nofollow">Firefox</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/chromium" target="_blank" rel="noopener noreferrer nofollow">Chromium</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/LibreOffice" target="_blank" rel="noopener noreferrer nofollow">LibreOffice</a></li>
+<li><a href="https://transmissionbt.com/" target="_blank" rel="noopener noreferrer nofollow">Transmission</a></li>
+</ul>
+<h3><h id="gnome3-extensions"> GNOME3插件 </h></h3>
+<ul>
+<li><a href="https://extensions.gnome.org/extension/1031/topicons/" target="_blank" rel="noopener noreferrer nofollow">TopIcons Plus</a></li>
+</ul>
+<h1><h id="sum"> 總結 </h></h1>
+<p>最後，筆者引用「Arch Linux」的三句忠告：</p>
+<blockquote>
+<ol>
+<li>Respect the privacy of others.</li>
+<li>Think before you type.</li>
+<li>With great power comes great responsibility.</li>
+</ol>
+</blockquote>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

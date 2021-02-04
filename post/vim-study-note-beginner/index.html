@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>Vim學習筆記：與鍵盤最優雅的距離 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="Vim, 學習筆記">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>Vim學習筆記：與鍵盤最優雅的距離</h1>
+    <h4><time datetime="2017-05-13">2017-05-13</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#intro">前言</a></li>
+<li><a href="#refer">參考</a></li>
+<li><a href="#learn-to-type">上手：學會打字</a></li>
+<li><a href="#what-can-we-do">入門：我們還可以幹什麼</a>
+<ul>
+<li><a href="#more-edit">更多的編輯和存儲</a></li>
+<li><a href="#effect-cursor-movement">不但是查找，還是高效的光標移動</a></li>
+<li><a href="#move-in-paragraph">在字符之中自由的遊走</a></li>
+<li><a href="#insert-more">更多插入內容的方法</a></li>
+<li><a href="#change-content">更多修改內容的方法</a></li>
+<li><a href="#redo">如何反悔和重做</a></li>
+<li><a href="#vim-as-language">把vim當作一種語言</a></li>
+</ul>
+</li>
+<li><a href="#after">入門之後：將瑣事交給vim</a>
+<ul>
+<li><a href="#auto-complete">自動補全</a></li>
+<li><a href="#auto-indent">自動縮進</a></li>
+</ul>
+</li>
+</ul>
+<h1><h id="intro"> 前言 </h></h1>
+<p><a href="https://en.wikipedia.org/wiki/Vim_(text_editor)" target="_blank" rel="noopener noreferrer nofollow">Vim</a>（全稱：Vi IMproved）是一種習慣，它是編輯神器<a href="https://en.wikipedia.org/wiki/Vi" target="_blank" rel="noopener noreferrer nofollow">vi</a>的改進。為什麼總有人把vi/vim稱為一種習慣？因為它太過微小，太過簡單，但是在無形之中它就將所有的工作都完成了。</p>
+<p>vi和vim的具體區別大家可以對比wikipedia的介紹，從使用角度，vi和vim其實是一樣的，只是因為vim是vi的改進版，所以添加了很多有用的功能，使用起來也更加方便一些，本文主要講解vim。</p>
+<p>學習vim是一個不斷練習的過程，最開始是了解命令、了解不同的模式，到最後眼中就不會有那些複雜的命令，全然是一種內在的習慣了，本篇文章並不會講解vim全部的功能，只是作為引導，不想聽筆者廢話的也可以直接參閱下面推薦的參考資料。</p>
+<p><strong>!!!除了下面提供的參考資料，筆者還強力推介<code>vim</code>自帶的<code>vimtutor</code>。大部分distro都可以找到<code>vimtutor</code>的pkg，如果需要的話網上也有很多的資源!!!</strong></p>
+<h1><h id="refer"> 參考 </h></h1>
+<p>vi的資料：</p>
+<ul>
+<li><a href="https://www.cs.colostate.edu/helpdocs/vi.html" target="_blank" rel="noopener noreferrer nofollow">Basic vi Commands</a></li>
+</ul>
+<p>vim的資料：</p>
+<ul>
+<li><a href="http://www.vim.org/" target="_blank" rel="noopener noreferrer nofollow">vim官網</a></li>
+<li><a href="http://www.openvim.com/" target="_blank" rel="noopener noreferrer nofollow">Interactive Vim tutorial</a>（一款很好的在線vim教學項目，現在還只有基本的教學，並不是很完善，喜歡的朋友可以去貢獻代碼）</li>
+<li><a href="http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/#" target="_blank" rel="noopener noreferrer nofollow">Learn Vim Progressively</a></li>
+<li><a href="https://danielmiessler.com/study/vim" target="_blank" rel="noopener noreferrer nofollow">A vim Tutorial and Primer</a></li>
+<li><a href="http://whileimautomaton.net/2008/11/vimm3/operator" target="_blank" rel="noopener noreferrer nofollow">operator, the true power of Vim</a></li>
+</ul>
+<h1><h id="learn-to-type"> 上手：學會打字 </h></h1>
+<p>在學習之前注意：</p>
+<ul>
+<li>下面的文字中，如果是要輸入 <code>Ctrl-λ</code> 筆者會使用 <code>&lt;C-λ&gt;</code> 表示。（提示：為了方便各位看官閱讀其它教程，有些大神可能會將 <code>Ctrl-λ</code> 用 <code>^λ</code> 表示）</li>
+<li>以 <code>：</code> 開始的命令需要輸入 <code>&lt;enter&gt;</code> 回車，例如 —— 如果教程中寫道 <code>:q</code> 也就是說我們需要輸入 <code>:q&lt;enter&gt;</code> 。</li>
+</ul>
+<p>首先，請安裝vim（這裡提供的是「Arch Linux」的命令）：</p>
+<pre><code class="language-bash">$ sudo pacman -S sudo pacman -S vim
+</code></pre>
+<p>安裝完畢後，創建一個新文件：</p>
+<pre><code class="language-bash">$ vim hello
+</code></pre>
+<p>然後你就進入了vim，但是先不要激動，因為你根本不能正常編輯，這時我們就需要了解vim其實有三個編輯模式：</p>
+<pre><code class="language-c">* Normal模式
+* Insert模式
+* Visual模式
+</code></pre>
+<p>每種模式會在左下角顯示出來，Normal模式的時候什麼都不顯示，一開始進入的也就是Normal模式，在這個模式下你可以輸入一些命令：</p>
+<pre><code class="language-c">i //進入Insert模式
+v //進入Visual模式
+
+h //向左移動光標
+j //向下移動光標
+k //向上移動光標
+l //向右移動光標
+
+:w //write存儲文件
+:q //quit退出文件
+</code></pre>
+<p>進入Insert和Visual模式之後只需要按<code>ESC</code>就可以返回Normal模式。另外，在vim中也可以使用方向鍵代替<code>hjkl</code>的移動，不過筆者還是推薦熟練<code>hjkl</code>的用法。到此為止我們就可以將vim當作一個正常的編輯器使用了。</p>
+<h1><h id="what-can-we-do"> 入門：我們還可以幹什麼 </h></h1>
+<p>從上面的例子我們不難看出，大部分的命令都是在Normal模式實現的，所以我們有的時候也叫這個模式Command模式（當然有些大神把輸入<code>:</code>單獨稱為Command模式，或者Ex模式，要是有大神對這裡能給出準確定義請指正）。在vim中，我們所用到的指令其實都可以理解為語言，我們只需要了解每個按鍵的含義，就可以自己組合出不同的功能，在這一部分我們會進行細緻的講解。</p>
+<p>首先，先擴充一下模式切換的按鍵：</p>
+<pre><code class="language-c">i //insert 在光標位置插入
+a //append 在光標後面插入
+
+v //visually select 逐個字符可視化選擇
+V //逐行可視化選擇執政
+&lt;C-v&gt; //visual block 區塊可視化選擇
+</code></pre>
+<h2><h id="more-edit"> 更多的編輯和存儲 </h></h2>
+<p>然後我們說一下基礎的編輯功能：</p>
+<pre><code class="language-c">d //delete 刪除
+c //change 更改
+y //yank(copy) 複製
+</code></pre>
+<p>其中<code>d</code>和<code>c</code>最主要的區別在於，使用<code>c</code>之後會進入Insert模式，這就是為什麼其名為更改的原因。</p>
+<p>除了編輯文字之外我們還得了解怎麼打開和存儲文件，除了上面介紹的幾種方法以外你還可能會使用：</p>
+<pre><code class="language-c">:q! //強制退出，放棄所有修改
+:wq //保存並退出
+
+:w /some/path/[filename] //另存為新的文件名
+:saveas /some/path/[filename] //同樣也是另存為和上一條效果一致
+
+:x //如果沒有修改則直接退出，如果進行修改則保存修改後退出，可以稱為:wq的更快捷方法
+ZZ //更快捷的:wq的方法
+</code></pre>
+<h2><h id="effect-cursor-movement"> 不但是查找，還是高效的光標移動 </h></h2>
+<p>vim中還包含着很強大的查找功能：</p>
+<pre><code class="language-c">t //光標停留在被查找字符之前
+f //光標停留在被查找字符的位置
+</code></pre>
+<p>事實上，T、F的功能和t、f相同，區別在於前者是向前查找，這些搜索功能不但可以看作搜索功能，更可以當作移動光標的功能，這樣在之後選擇內容上就會非常的高效。除了搜索單一字符或相同內容外，vim還可以直接搜索我們想要的內容：</p>
+<pre><code class="language-c">/ // 向下尋找一串字符
+? // 向上尋找一串字符
+</code></pre>
+<p>在搜索一串字符的時候我們可以進行向上、向下查詢：</p>
+<pre><code class="language-c">n // 下一個字符
+N // 上一個字符
+</code></pre>
+<p>這兩個按鍵針對不同查詢方式反應是不一樣的，各位看官自己嘗試一下便能感受其中的神奇，另外，有興趣的朋友還可以仔細觀察左下角的命令變化。</p>
+<p>除了這些還有兩個更為靈活的命令，介於查找和移動之間，筆者將其放在這裡：</p>
+<pre><code class="language-c">* // 尋找光標所在位置的相同內容（一般是以一個單詞或者一個符號為單位，vim非常智能會自動決斷你想表達的意思）
+
+% //在對應的左右括號( [、(、{ )之間切換  
+</code></pre>
+<h2><h id="move-in-paragraph"> 在字符之中自由的遊走 </h></h2>
+<p>接下來筆者將介紹更多的移動方式</p>
+<pre><code class="language-c">0 //將光標移動到所在行的起始位置
+$ //將光標移動到所在行的結束位置
+^ //將光標移動到第一個非空字符
+
+w //移動到下一個單詞
+b //移動到上一個單詞
+e //移動到下一個單詞的末尾
+
+W //移動到下一個單詞（使用W的時候粗略的將兩個空格之間的一切看成一個單詞，而w會考慮其它符號影響）
+B //移動到上一個單詞（原理同上）
+</code></pre>
+<p>除了這些以外，我們還可以進行更大幅度的移動：</p>
+<pre><code class="language-c">:line_number //移動到指定行
+
+H //移動到屏幕頂部
+M //移動到屏幕中央
+L //移動到屏幕底部
+
+[line_number]G //移動到指定行（命令中不包含[]）和:相同
+gg //移動到文件頂部（相當於1G）
+G //移動到文件底部
+
+&lt;C-U&gt; //向上移動半個屏幕
+&lt;C-D&gt; //向下移動半個屏幕
+&lt;C-F&gt; //向上翻頁
+&lt;C-B&gt; //向下翻頁
+</code></pre>
+<h2><h id="insert-more"> 更多插入內容的方法 </h></h2>
+<pre><code class="language-c">I //在所在行的開頭（不計入空字符）插入字符
+A //在所在行末尾插入字符
+
+o //open 打開新的一行 在所在行之後插入新的一行
+O //open 打開新的一行 在所在行之前插入新的一行
+
+r //replace 替換 替換當前光標所在字符
+R //replace 替換 從當前光標開始替換字符
+
+C //change 更改 更改當前行
+</code></pre>
+<h2><h id="change-content"> 更多修改內容的方法 </h></h2>
+<p>在vim的世界中我們並不一定要在Insert模式中修改字符，很多時候都可以直接在Normal模式中修改。當然，多說一句，其實真正高手的眼中是沒有不同模式之分的，之後筆者會進行更加詳盡的解釋。</p>
+<pre><code class="language-c">x //exterminate 消除 消除當前光標所在字符
+X //exterminate 消除 消除當前光標前的一個字符
+
+dd //刪除當前行
+D //從光標所在位置刪除到當前行結束
+
+yy //複製當前行（和ddP的作用一致）
+
+J //join 合併 合併當前行和下一行
+</code></pre>
+<p>vim非常方便的一點是，無論是複製<code>y</code>(yank)、<code>c</code>(change)還是<code>d</code>(delete)亦或是<code>x</code>(exterminate)的操作，vim都會將修改的內容保存下來方便我們隨時粘貼，下面就列出粘貼的方法：</p>
+<pre><code class="language-c">p //paste 粘貼 在當前光標之後粘貼
+P //paste 粘貼 在當前光標之前粘貼
+</code></pre>
+<h2><h id="redo"> 如何反悔和重做 </h></h2>
+<p>在修改文字的時候難免會遇到錯誤的時候，這時候就需要撤銷(undo)和重做(redo)：</p>
+<pre><code class="language-c">u //撤銷上次操作
+&lt;C-r&gt; //重複上次操作
+</code></pre>
+<h2><h id="vim-as-language"> 把vim當作一種語言 </h></h2>
+<p>在學習完前面的內容之後，我們只是了解了vim的部分，真正vim的使用要像說話一樣，而且隨着對vim的使用更加熟練，我們會發現當同樣一個命令在作為名詞或者動詞組合在一起的時候可能會有完全不同的意思，下面就先把我們已經熟悉的一些命令和其中部分的不同含義列出來：</p>
+<pre><code class="language-c">i //inside 之中
+a //around 周圍
+
+w //word 單詞
+s //sentence 句子
+p //paragraph 段落
+
+t //tag(HTML/XML) 標籤
+b //block 區塊（編程中的概念）
+</code></pre>
+<p>下面筆者先列舉一些簡單的例子：</p>
+<pre><code class="language-c">dw //刪除到下一個單詞
+cb //更改到上一個單詞
+y2w //複製下兩個單詞
+</code></pre>
+<p>以上是比較簡單的用法，原理其實就是一個動作，比如<code>d</code>代表刪除，<code>w</code>是移動到下一個單詞，所以就是刪除到下一個單詞的意思了。在例子<code>y2w</code>中，我們可以知道在命令前面加上數字就代表重複這個命令幾次，這個可以推而廣之，幾乎所有的命令都可以這樣使用，通過重複命令可以使輸入效率有明顯提升。同理我們還可以更加靈活的使用一些命令：</p>
+<pre><code class="language-c">0y$ //從所在行的起始位置複製到所在行的結束位置
+y2/foo //複製到第二次foo出現的位置
+</code></pre>
+<p>接下來我們再加大難度：</p>
+<pre><code class="language-c">ci&quot; //更改“&quot;”中的內容（change in &quot;）
+da( //刪除“(”以及其中的內容（delete around (）
+ct&quot; //修改到“&quot;”（change to &quot;）
+</code></pre>
+<p>這個可能會讓人疑惑，<code>i</code>和<code>a</code>不是插入的字符嗎？但是在這裡它們其實是修飾詞(Modifiers)，所以含義上也和之前有所不同。</p>
+<p>vim的神奇之處並不僅限於此，當我們懂得了vim是一門語言之後我們就有了更多的施展空間，小夥伴們可以自己隨意組合出不同的命令。</p>
+<h1><h id="after"> 入門之後：將瑣事交給vim </h></h1>
+<p>經過上述的學習加上不斷的練習，我們對vim的語言理解更加深入了，但是學會一種語言並不難，精通才是根本。就如我們平常說話一樣，越精通越簡練，很多時候vim可以自動幫你完成你需要的事情。下面筆者就介紹幾個常用的功能：</p>
+<h2><h id="auto-complete"> 自動補全 </h></h2>
+<p>在寫作或者編程的時候我們經常會使用到自動補全(auto-complete)功能，在vim中這項功能尤為強大，只需要在Insert模式下輸入：</p>
+<pre><code class="language-c">&lt;C-p&gt; //向上自動補全
+&lt;C-n&gt; //向下自動補全
+</code></pre>
+<p>有人可能會好奇為什麼要有兩個補全？原因是為了更高效的輸入，在進行龐大文字輸入工作的時候這樣做會極大的提高效率，這也再次印證了vim是為高效而生的。當然，除了這兩種自動補全的方法以外還有使用<code>&lt;C-x&gt;</code>的更具體的方式，在這裡為了方便大家吸收就不補充了，在本篇文章的後半部分可能會擴充這部分的知識。</p>
+<h2><h id="auto-indent"> 自動縮進 </h></h2>
+<p>自動縮進(auto-indent)這個功能筆者自然不必過多贅述，單單這一項功能就可以讓人愛上vim：</p>
+<pre><code class="language-c">= //自動縮進
+</code></pre>
+<p>只需要使用<code>&lt;C-v&gt;</code>選擇我們需要縮進的行然後按下<code>=</code>所有的代碼就整整齊齊的呈現在我們面前了。當然，vim中也含有手動縮進的方法：</p>
+<pre><code class="language-c">&lt; // 向左縮進
+\&gt; // 向右縮進
+</code></pre>
+<p>有的時候寫文章自動縮進就不再有效，手動縮進就顯得比較方便。</p>
+<h1>總結</h1>
+<p>這篇文章從創建開始到現在陸陸續續寫了好長時間，主要的原因是筆者這期間事情較多，所以決定先將這篇文章發布出來之後再做修改。除了筆者介紹的這些功能以外，vim還有很多亮點，比如，更高級的Visual模式的使用方法，或者是錄製命令等等。又或者，更加厲害的高手可能就不需要Visual模式了，一切均可以通過簡單的幾個按鍵來進行操作，vim還有很多值得我們發掘的地方。不積跬步，無以至千里；不積小流，無以成江海，使用vim的熟練程度不是一天造就的，筆者願與各位共勉～</p>
+<p>（未完待續～）</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

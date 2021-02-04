@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>「Cryptography」基礎：前世今生 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="密碼學, Cryptography, 數學, Math">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>「Cryptography」基礎：前世今生</h1>
+    <h4><time datetime="2019-05-22">2019-05-22</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#intro">引言</a></li>
+<li><a href="#history">歷史</a></li>
+<li><a href="#modern">現代密碼學</a>
+<ul>
+<li><a href="#DH">Diffie–Hellman key exchange</a>
+<ul>
+<li><a href="#DH-step">步驟</a></li>
+<li><a href="#DH-explain">原理</a></li>
+<li><a href="#DH-break">破解</a>
+<ul>
+<li><a href="#DH-break-bsgs">Baby-step giant-step</a></li>
+<li><a href="#DH-break-MITM">Man-in-the-middle attack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#RSA">RSA</a>
+<ul>
+<li><a href="#RSA-step">步驟</a></li>
+<li><a href="#RSA-explain">原理</a></li>
+<li><a href="#RSA-break">破解</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sum">總結</a></li>
+</ul>
+<h1><h id="intro"> 引言 </h></h1>
+<p><a href="https://en.wikipedia.org/wiki/Cryptography" target="_blank" rel="noopener noreferrer nofollow">Cryptography</a>（中文：密碼學）一詞源於希臘語κρυπτός（隱藏，秘密）和γράφειν（書寫）在<a href="https://en.wikipedia.org/wiki/Cryptography" target="_blank" rel="noopener noreferrer nofollow">Wikipedia(Cryptography)</a>裡有詳細的介紹。</p>
+<p>如今信息安全變得越來越重要，保護信息安全的措施也愈加豐富，這其中密碼學(Cryptography)的發展是功不可沒的。筆者之前在<a href="https://zhao.center/post/basic-secure-intro/" target="_blank" rel="noopener noreferrer nofollow">初級加密指南</a>一文中提到的「GPG」就是密碼學發展的產物。密碼學的發展有一定的歷史，不過經典密碼學(Classic Cryptography)和現代密碼學有着很大的區別，現代密碼學發展的時間並不是很長。經典密碼學如<a href="https://zh.wikipedia.org/zh-hant/%E5%AF%86%E7%A0%81%E5%AD%A6" target="_blank" rel="noopener noreferrer nofollow">「Wikipedia（密碼學）」</a>上所說「古典密碼學的編碼和破譯通常依賴於設計者和敵手的創造力與技巧，作為一種實用性藝術存在，並沒有對於密碼學原件的清晰定義」，而現代密碼學得益於計算機技術的發展，和計算機科學，數學等學科更加息息相關。所以說學好密碼學首先要有一定的數學認知，其中比較重要的學科是<a href="https://en.wikipedia.org/wiki/Number_theory" target="_blank" rel="noopener noreferrer nofollow">「Number theory」</a>（中文：數論），筆者也會盡力在以後寫一篇關於「Number theory」的文章。</p>
+<p>這裡插一句題外話～數學的奧妙就是如此，看似和現實生活關聯不大，卻能潤物細無聲地推動科學和現實生活的發展。「Number theory」的是一個相對古老的學科，但人們在很長的一段時間中都無法將其在現實中應用。然而隨着計算機技術的誕生，人們發現很多計算機領域的問題都可以從「Number theory」中尋求答案。</p>
+<h1><h id="history"> 歷史 </h></h1>
+<p>密碼學很早就被應用在了戰爭之中，古中國周朝兵書《六韜．龍韜》就有記載：</p>
+<blockquote>
+<p>太公曰：「主與將，有陰符，凡八等。有大勝克敵之符，長一尺。破軍擒將之符，長九寸。降城得邑之符，長八寸。卻敵報遠之符，長七寸。警眾堅守之符，長六寸。請糧益兵之符，長五寸。敗軍亡將之符，長四寸。失利亡士之符，長三寸。諸奉使行符，稽留，若符事聞，泄告者，皆誅之。八符者，主將祕聞，所以陰通言語，不泄中外相知之術。敵雖聖智，莫之能識。」 武王問太公曰：「…符不能明；相去遼遠，言語不通。為之奈何？」 太公曰：「諸有陰事大慮，當用書，不用符。主以書遺將，將以書問主。書皆一合而再離，三發而一知。再離者，分書為三部。三發而一知者，言三人，人操一分，相參而不相知情也。此謂陰書。敵雖聖智，莫之能識。」</p>
+</blockquote>
+<p>簡單來說，「陰符」就是使用不同長度的「符」來表達不同的含義，而「陰書」則是將信息分成三份，只有三份合一才能解讀信息。除了這段文獻筆者也找到了古代中國和密碼學相關的其他的一些文獻，但是在網路上中文資料對於中國古代密碼學的總結並不是很多。而且鑑於密碼學本身就是一個相對現代（且偏西方知識體系）的概念，對於一件事物算不算是密碼學的界定也相對模糊，所以筆者無法再做更加詳盡的介紹。可以知道的是，中國古代是有一些零零散散的密碼學應用。</p>
+<p>除了中國以外，古埃及人和古希臘人對於密碼學也有着一定的應用，這些歷史可以參考<a href="https://en.wikipedia.org/wiki/Cryptography" target="_blank" rel="noopener noreferrer nofollow">Wikipedia(Cryptography)</a>。下面筆者介紹一個非常廣為人知的經典加密方法「Shift Cipher」（又名：Caesar cipher，據說凱撒大帝在戰場上就應用了這個方法）。「Shift Cipher」的原理很簡單，其加密過程就是將字母表進行位移，使得每一個原有的字母都有其唯一對應的經過位移的字母，例如我們將所有字母向左位移1：</p>
+<pre><code>Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Cipher: BCDEFGHIJKLMNOPQRSTUVWXYZA
+</code></pre>
+<p>當我們想要加密(encrypting)文字的時候，只需要應用上面的表格即可，例如：</p>
+<pre><code>Plain text:   HELLO WORLD
+Cipher text:  IFMMP XPSME
+</code></pre>
+<p>解密(deciphering)的時候只需要反向操作即可。</p>
+<p>不過這些加密方法雖然看似種類繁多，卻又大同小異。而且這些加密方法有一個很大的缺點，那就是使用加密方式進行交流的雙方需要提前通過物理接觸達成一個「共識」（例如上面例子中的「向左位移1」），所以任何一個掌握「共識」的人都可以對密文進行破解。</p>
+<p>隨着時間的推移人們發明出來的加密方法愈發複雜和難以破解，但這些方法的本質卻沒有任何進步，都存在着上述的問題。即使是二戰有名的<a href="https://en.wikipedia.org/wiki/Enigma_machine" target="_blank" rel="noopener noreferrer nofollow">「Enigma」</a>也跳脫不出這個限制。當然人們對密碼學的理解並非停滯不前，生活在19世紀的<a href="https://en.wikipedia.org/wiki/Auguste_Kerckhoffs" target="_blank" rel="noopener noreferrer nofollow">「Auguste Kerckhoffs」</a>就提出過<a href="https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle" target="_blank" rel="noopener noreferrer nofollow">「Kerckhoffs’s principle」</a>：一個人盡皆知的系統，只要保有密鑰，那它依然應該是安全的。尤其是隨着計算機技術的發展，經典密碼學的加密方法變得極易破解，人們很需要一套更加現代的密碼學體系。</p>
+<h1><h id="modern"> 現代密碼學 </h></h1>
+<p>如今的密碼學(Cryptography)是一門綜合性非常強的學科，但是信息保密依然是最為重要的一環。因此這一部分筆者將着重地介紹，比較著名的加密算法(Encryption algorithm)及其原理。</p>
+<p>⚠注意 ：</p>
+<ul>
+<li>因為筆者對中文技術名詞不甚了解且從這裡開始文章將會以技術為主，所以會比較多（甚至全部）的使用英文。</li>
+<li>在Cryptography常用敘述中，通常會使用「Alice(“A”)」, 「Bob(“B”)」等人物來區分不同的角色，從而可以更加方便的解釋不同的Cryptosystem。筆者也會遵循這一傳統，有興趣的小夥伴可以查看<a href="https://en.wikipedia.org/wiki/Alice_and_Bob" target="_blank" rel="noopener noreferrer nofollow">這裡</a>了解更多。</li>
+</ul>
+<h2><h id="DH"> Diffie–Hellman key exchange </h></h2>
+<p>時間是1976年，Diffie和Hellman兩個人發表了一項重要的研究，這是第一個在公共信道(public channel)中安全交換密鑰(cryptographic key)的方法，被後人成為<a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank" rel="noopener noreferrer nofollow">「Diffie–Hellman key exchange」</a>。但因為受到NSA的阻力，直到1977年這個方法才得以在「The International Symposium on Information Theory」上公開宣講，具體的歷史故事可以看<a href="https://stanfordmag.org/contents/keeping-secrets" target="_blank" rel="noopener noreferrer nofollow">這裡</a>。不過，1997年英國GCHQ公開的機密信息顯示，其研究人員在1969年便實現了「public-key cryptography」。另外，在2002年Hellman將這個安全協議的名稱加上「Ralph Merkle」的名字，更改為「Diffie–Hellman–Merkle key exchange」，因為是Merkle最先提出了「public key distribution system」的概念。</p>
+<h3><h id="DH-step"> 步驟 </h></h3>
+<p>下面我們來看一下「Diffie–Hellman」的操作步驟：</p>
+<ol>
+<li>
+<p><strong>Alice</strong> and <strong>Bob</strong> agree on a large prime \(p\) and a primitive root \(g\) (i.e. \((\mathbb{Z}/p)^{\times} = \langle g \rangle \)) (⚠ Now: Everyone knows \(p\), \(g\))</p>
+</li>
+<li>
+<p><strong>Alice</strong> chooses a secret \(x\), then sends \(X \equiv g^{x} \bmod p\) to <strong>Bob</strong></p>
+</li>
+<li>
+<p><strong>Bob</strong> chooses a secret \(y\), then sends \(Y \equiv g^{y} \bmod p\) to <strong>Alice</strong> (⚠ Now: Everyone knows \(p\), \(g\), \(X\), \(Y\))</p>
+</li>
+<li>
+<p><strong>Alice</strong> computes \(k \equiv Y^{x} \bmod p\)</p>
+</li>
+<li>
+<p><strong>Bob</strong> computes \(k \equiv X^{y} \bmod p\)</p>
+</li>
+<li>
+<p>Finally, <strong>Alice</strong> and <strong>Boc</strong> share a secret \(k\)</p>
+</li>
+</ol>
+<h3><h id="DH-explain"> 原理 </h></h3>
+<p>其原理其實非常的簡單，如下：</p>
+<p>\(k \equiv Y^{x} \equiv (g^{y})^{x} \equiv g^{yx} \equiv (g^{x})^{y} \equiv X^{y} \bmod p\)</p>
+<p>其難度是基於人們目前沒有找到高效的解決「discrete logarithm problem」的辦法。</p>
+<h3><h id="DH-break"> 破解 </h></h3>
+<p>如上面所述，「Diffie–Hellman」的安全性是基於「discrete logarithm problem」的難度。如果未來有人找到了這個問題更好的解決辦法，那這一類系統的破解難度就會大幅度降低。</p>
+<p>這裡筆者會介紹兩種目前用來破解「Diffie–Hellman key exchange」的方法：</p>
+<h4><h id="DH-break-bsgs"> Baby-step giant-step </h></h4>
+<p>用<a href="https://en.wikipedia.org/wiki/Baby-step_giant-step" target="_blank" rel="noopener noreferrer nofollow">「Baby-step giant-step」</a>方法直接暴力破解是相對直接的方法，首先我們先簡單介紹「Baby-step giant-step」的原理：</p>
+<p>⚠ For a given cyclic group \(G\) of order \(p-1\), a generator \(g\) of the group and a group element \(a\). We want to find an integer \(l\) such that: \(g^l=a \bmod p\).</p>
+<ol>
+<li>Set \(m = \lceil\sqrt{p-1}\rceil\), then \(p - 1 \leqslant m^2\)</li>
+<li>Let \(l = im + j\), where \(i, j &lt; m\)</li>
+<li>(Baby-Step) Compute and record \(g^0, g^1, g^2, \dots ,g^{m-1} \bmod p\)</li>
+<li>We have \(g^l \equiv a \bmod p \Rightarrow g^{im+j} \equiv a \bmod p \Rightarrow g^j \equiv ag^{-im} \bmod p\)</li>
+<li>Compute \(g^{-m} \bmod p\)</li>
+<li>(Giant-Step) Start Computing \(a(g^{-m})^i\) for \(i=0,1,2,3\dots\)</li>
+<li>Then we can find a match in “Giant-Step” corresponding to one of the “Baby-Step”. Thus, we can compute the result.</li>
+</ol>
+<p>在了解「Baby-step giant-step」的原理後，我們就可以很直接的破解「Diffie–Hellman」了。我們已知在「Diffie–Hellman」中\(p\), \(g\), \(X\), \(Y\)都是已知的，所以我們要做的就是用「Baby-step giant-step」解決「\(X=g^{x} \bmod p\) 中的 \(x\)」和「\(Y=g^{y} \bmod p\) 中的 \(y\)」這兩個問題。然後通過 \( g^{xy} \)就可以求出密鑰了。</p>
+<h4><h id="DH-break-MITM"> Man-in-the-middle attack (MITM) </h></h4>
+<p>在公共網路環境中如果不加以身份驗證，我們就可以很容易的通過「Man-in-the-middle attack (MITM)」竊聽Alice和Bob的內容。</p>
+<h2><h id="RSA"> RSA </h></h2>
+<p>「Diffie–Hellman」的公布使人們打開了研究「Cryptography」的新思路。於是在一年後，也就是1977年「Rivest」，「Shamir」，「Adleman」三人發表了<a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)" target="_blank" rel="noopener noreferrer nofollow">「RSA」</a>加密算法（也就是三人姓氏的首字母），這也是現如今被使用最廣泛的加密算法之一。另外神奇的是，1997年英國GCHQ公開機密信息顯示其研究人員在1973年就已經研究出了類似的算法。</p>
+<h3><h id="RSA-step"> 步驟 </h></h3>
+<p>下面我們來看一下「RSA」的操作步驟：</p>
+<ol>
+<li>
+<p>choose two large primes \(p \neq q\)</p>
+</li>
+<li>
+<p>compute \(n = pq\) and \(\varphi(n)=(p-1)(q-1)\)</p>
+</li>
+<li>
+<p>choose \(e\) with \(\gcd(e,\varphi(n))=1\)</p>
+</li>
+<li>
+<p>choose \(d\) so that \(de \equiv 1 ; (\bmod \varphi(n))\)</p>
+</li>
+<li>
+<p>Now, the public key is \((e,n)\)</p>
+</li>
+<li>
+<p>To encode message \(M\) (less than \(n\)), compute \(M^{e} (\bmod n)\)</p>
+</li>
+<li>
+<p>to decode, compute \((M^{e})^{d} \equiv M (\bmod n)\)</p>
+</li>
+</ol>
+<h3><h id="RSA-explain"> 原理 </h></h3>
+<p>其原理便是步驟中的最後一步：</p>
+<p>\((M^{e})^{d} \equiv M (\bmod n)\)</p>
+<p>其破解難度是基於在實踐中沒有高效的解決「Integer factorization problem」的方法。</p>
+<h3><h id="RSA-break"> 破解 </h></h3>
+<p>如上面所述，「RSA」的難度在於「Integer factorization problem」的困難，所以當我們在討論如何破解「RSA」的時候我們主要是研究如何分解一個整數。而這就是一個很大的話題了，所以筆者會在以後進行補充 （未完待續～）</p>
+<h1><h id="sum"> 總結 </h></h1>
+<p>「Cryptography」的研究是一個艱難的過程。信息安全很多時候與國家利益息息相關，使得其經常成為追求人權及自由的人們和政府鬥爭的焦點。其中，「Diffie–Hellman–Merkle key exchange」這種在發表時受阻已是政府相對平和的做法，在很多國家公開發表和傳播特定的「Cryptography」相關知識很可能會被訴訟，甚至惹上牢獄之災。例如筆者在多篇文章中介紹過的PGP，被其發明者<a href="https://en.wikipedia.org/wiki/Phil_Zimmermann" target="_blank" rel="noopener noreferrer nofollow">Phil Zimmermann</a>在網路上發表之後便因PGP傳出國門而遭到了政府的犯罪調查，美國當時的「Export controls」認定PGP的源代碼屬於軍需品所以不能出口。好在<a href="https://en.wikipedia.org/wiki/Phil_Zimmermann" target="_blank" rel="noopener noreferrer nofollow">Phil Zimmermann</a>機智的將PGP的源代碼出版成了一本書，從而通過<a href="https://en.wikipedia.org/wiki/First_Amendment_to_the_United_States_Constitution" target="_blank" rel="noopener noreferrer nofollow">「First Amendment」</a>中的言論自由（書籍出版自由）的部分保護了自己的權益。雖然如今歐美的法律對於信息安全等領域的限制已經越來越少，但很多法律依舊暗藏殺機。</p>
+<p>信息安全的應用本身就是亦正亦邪的。例如普通人可以用「Cryptography」來保護自己的隱私，但是壞人可以用來傳播恐怖指令而不被發現。然而我們應該為這樣的不安而放棄自由嗎？每個人都有自己的理解，筆者認為，我們應該捍衛自由。因為這是我們人權中的一部分，就像法國的<a href="https://en.wikipedia.org/wiki/Declaration_of_the_Rights_of_Man_and_of_the_Citizen" target="_blank" rel="noopener noreferrer nofollow">《人權宣言》</a>所闡述的：</p>
+<blockquote><center> La liberté consiste à pouvoir faire tout ce qui ne nuit pas à autrui <br> —— <a href="https://www.legifrance.gouv.fr/Droit-francais/Constitution/Declaration-des-Droits-de-l-Homme-et-du-Citoyen-de-1789" target="_blank" rel="noopener">Déclaration des Droits de l’Homme et du Citoyen de 1789</a> </center></blockquote>
+<p>自由就是有權從事一切無害於他人的行為，而我們也應該捍衛所有人能夠從事一切無害於他人的行為的權力。</p>
+<p>言歸正傳，「Cryptography」是一門很豐富的學科。本篇文章只是冰山一角，更多的是希望諸位對「Cryptography」有一個整體的概念並且受到一些啟發。如今看來大部分的加密方法都無法做到一勞永逸，隨着科學技術的發展破解的方法只會更多，速度也會更快。例如隨着量子計算機「<a href="https://en.wikipedia.org/wiki/Quantum_computing" target="_blank" rel="noopener noreferrer nofollow">Quantum computing</a>」的發展，「Diffie–Hellman」、「RSA」和「elliptic curve」這樣常見加密方法的安全程度都會大打折扣。「Cryptography」就像是矛與盾的博弈，這也它如此充滿魅力的原因。</p>
+<p>最後筆者想說，本文有很多筆者自己理解的東西，如果有任何錯誤還望諸位不吝賜教(,,・ω・,,)</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

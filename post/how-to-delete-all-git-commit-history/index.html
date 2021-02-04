@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>如何刪除所有git的commit歷史 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="筆者網站的結構從發布以來就存在諸多問題，一同發布的兩個theme也存在着很多不盡如人意的地方。好在前一段時間的大更新修復了很多筆者一直看着彆扭的元素，同時也刪除了很多不需要的內容。因此筆者就想不如做的徹底一點，把git的commit歷史也都一併刪除了吧。">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="Git, 學習筆記">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>如何刪除所有git的commit歷史</h1>
+    <h4><time datetime="2019-08-30">2019-08-30</time> | 拂衣</h4>
+</header>
+
+<div>
+    <p>筆者網站的結構從發布以來就存在諸多問題，一同發布的兩個theme也存在着很多不盡如人意的地方。好在前一段時間的大更新修復了很多筆者一直看着彆扭的元素，同時也刪除了很多不需要的內容。因此筆者就想不如做的徹底一點，把git的commit歷史也都一併刪除了吧。</p>
+<p>刪除所有git的commit其實使用場景並不多，建議諸位不要在多人協作的開源項目中這麼做。即使是自己的項目，也最好保留一些重要的commit，說不定什麼時候突然想不起來的開發思路就從commit中找到了（如果喜歡懷舊的說不定還可以看着commit觸景生情，回憶自己開發過程的點滴）。所以想要清理部分commit的朋友，可以參考gitlab的這篇文章：<a href="https://about.gitlab.com/2018/06/07/keeping-git-commit-history-clean/" target="_blank" rel="noopener noreferrer nofollow">「How (and why!) to keep your Git commit history clean」</a>。在這裡就不過多贅述了。</p>
+<p>筆者之所以有清理commit的想法首先是因為這寫都是筆者的個人項目且無用的commit略多了，最重要的是像網站這種repo好像也沒什麼commit的必要，筆者以後全當「GitHub Pages」是個host了。於是筆者就從網路上找到了這個清理方法：<strong><a href="https://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github" target="_blank" rel="noopener noreferrer nofollow">how to delete all commit history in github?</a></strong></p>
+<p>以下是如何操作（和原鏈接步驟一模一樣，本篇文章只是記錄，詳細內容看原鏈接就好）：</p>
+<pre><code class="language-bash"># checkout a tmp branch
+git checkout --orphan tmp_branch
+
+# add all
+git add -A
+
+# commit
+git commit -am &quot;first commit&quot;
+
+# delete master branch
+git branch -D master
+
+# rename current to master
+git branch -m master
+
+# force push to the remote repo
+git push -f origin master
+</code></pre>
+<p>這樣之後筆者的repo就都只有一個commit了。清理之後的感受真的太爽了！就像清空回收站一樣～</p>
+<p>最後還是希望各位謹慎清理，希望大家和筆者一樣清理的開心 (^u^)</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

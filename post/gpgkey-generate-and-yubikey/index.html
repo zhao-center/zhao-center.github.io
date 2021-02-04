@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>本地生成GPG密鑰並使用yubikey - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="初學者, 計算機, 加密, 安全, GPG, yubico, yubikey">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>本地生成GPG密鑰並使用yubikey</h1>
+    <h4><time datetime="2017-12-25">2017-12-25</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#intro">前言</a></li>
+<li><a href="#refer">資料</a>
+<ul>
+<li><a href="#refer_gpg">GPG</a></li>
+<li><a href="#refer_yubikey">Yubikey</a></li>
+</ul>
+</li>
+<li><a href="#edit-yubikey">編輯yubikey</a></li>
+<li><a href="#generate-gpg-import-to-yubikey">生成GPG密鑰並導入yubikey</a>
+<ul>
+<li><a href="#generate-gpg">生成GPG密鑰</a></li>
+<li><a href="#authentication-key">authentication密鑰</a></li>
+<li><a href="#gpg-backup">備份GPG密鑰</a></li>
+<li><a href="#keytocard">將密鑰導入yubikey</a></li>
+</ul>
+</li>
+<li><a href="#others">其它</a>
+<ul>
+<li><a href="#list-keys">查看密鑰</a></li>
+<li><a href="#delete-key">刪除密鑰</a></li>
+<li><a href="#import-key">導入密鑰</a></li>
+<li><a href="#trust-key">信任密鑰</a></li>
+<li><a href="#yubikey-not-connect">無法連接yubikey</a></li>
+</ul>
+</li>
+<li><a href="#sum">總結</a></li>
+</ul>
+<h1><h id="intro"> 前言 </h></h1>
+<p>GPG和各種各樣的GnuPG Smartcard是一個完美的組合，它使得GPG密鑰(GPG key)在某種程度上更加安全和便捷。其中yubikey更是非常的實用，可以說是目前市場上功能最強大的了～對於個人信息的安全我們絕對不能懈怠，因為信息的價值是寶貴的，所以非常推薦大家去購買和使用yubikey。在這裡就不對安全方面的問題進行過多的贅述啦，有興趣的同學可以閱讀筆者的其它文章或者持續關注本站的內容。此篇文章的重點是讓大家快速上手GPG密鑰和yubikey能夠不需要多少知識就體會它們的奧妙，如果想要了解更多的朋友可以通過閱讀官方手冊來進行學習～按照慣例放出下方資料鏈接，官方手冊的內容比筆者的更加準確和詳實，希望可以為小夥伴們提供幫助～</p>
+<h1><h id="refer"> 資料 </h></h1>
+<h2><h id="refer_gpg"> GPG </h></h2>
+<ul>
+<li><a href="https://www.gnupg.org/gph/en/manual.html" target="_blank" rel="noopener noreferrer nofollow">The GNU Privacy Handbook</a></li>
+<li><a href="http://www.dewinter.com/gnupg_howto/english/GPGMiniHowto.html" target="_blank" rel="noopener noreferrer nofollow">Gnu Privacy Guard (GnuPG) Mini Howto (English)</a></li>
+<li><a href="https://www.gnupg.org/howtos/card-howto/en/smartcard-howto.html" target="_blank" rel="noopener noreferrer nofollow">How to use the Fellowship Smartcard</a></li>
+</ul>
+<h2><h id="refer_yubikey"> Yubikey </h></h2>
+<ul>
+<li><a href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-openpgp/#generatelocal" target="_blank" rel="noopener noreferrer nofollow">Generating the key on your local system</a></li>
+<li><a href="https://developers.yubico.com/PGP/Importing_keys.html" target="_blank" rel="noopener noreferrer nofollow">Importing keys</a></li>
+<li><a href="https://developers.yubico.com/PGP/" target="_blank" rel="noopener noreferrer nofollow">Yubico PGP</a></li>
+<li><a href="https://developers.yubico.com/PGP/Card_edit.html" target="_blank" rel="noopener noreferrer nofollow">Yubico Card edit</a></li>
+</ul>
+<h1><h id="edit-yubikey"> 編輯yubikey </h></h1>
+<p>首先，我們需要對yubikey進行編輯：</p>
+<pre><code class="language-bash">gpg --card-edit
+</code></pre>
+<p>進入卡片編輯模式之後我們可以使用：<code>help</code>命令來查看可以使用的命令。</p>
+<p>有心的小夥伴可以在這個模式下更改卡片信息，比如所有人信息之類的。</p>
+<p>不過我們現在並不需要了解這麼多，編輯卡片的主要目的其實是為了更改yubikey的PIN碼。GPG卡片中有兩個PIN碼（分別是常用的PIN在每次使用的時候輸入，還有一個是管理員PIN(Admin PIN)，在執行一些高權限操作的時候用到）還有一個重置代碼(Reset Code)可以將所有的密碼重置。如果PIN錯誤輸入三次那麼yubikey就會自動鎖死這也是為什麼它安全的原因。在最開始拿到yubikey的時候，默認的PIN碼為：123456 默認的管理員PIN為：12345678 這樣的密碼顯然是易於破解的。所以下面我們就先開始更改密碼。</p>
+<p>首先，我們輸入：<code>admin</code> 來開啟管理員命令</p>
+<p>接下來我們輸入：<code>passwd</code> 然後按照提示進行修改就可以了</p>
+<p>PIN碼修改完畢之後我們就可以正式進入GPG的生成和導入環節了。</p>
+<h1><h id="generate-gpg-import-to-yubikey"> 生成GPG密鑰並導入yubikey </h></h1>
+<h2><h id="generate-gpg"> 生成GPG密鑰 </h></h2>
+<pre><code class="language-bash">gpg --full-generate-key
+</code></pre>
+<p>對於yubikey建議選擇：<code>(1) RSA and RSA (default)</code> 然後長度輸入：<code>4096</code></p>
+<h2><h id="authentication-key"> authentication密鑰 </h></h2>
+<p>首先進入密鑰編輯模式：</p>
+<pre><code class="language-bash">gpg --expert --edit-key [UID]
+</code></pre>
+<p>進入編輯模式之後輸入：<code>addkey</code> 來添加新的密鑰</p>
+<p>然後按照之前的步驟選擇相應的選項（按照之前的推薦這裡應該選<code>(8) RSA (set your own capabilities)</code>）</p>
+<p>之後順序選擇<code>A</code>、<code>S</code>、<code>E</code>、<code>Q</code></p>
+<p>接下來選擇密鑰的尺寸</p>
+<p>然後選擇密鑰過期時間（需要和GPG密鑰的過期時間相同）</p>
+<h2><h id="gpg-backup"> 備份GPG密鑰 </h></h2>
+<pre><code class="language-bash">gpg --export-secret-key --armor [UID]
+</code></pre>
+<p>導出的GPG密鑰是非常珍貴的，最好存儲在一個經過加密的移動存儲設備中，並且放置在安全可靠的地方。</p>
+<h2><h id="keytocard"> 將密鑰導入yubikey </h></h2>
+<pre><code class="language-bash">gpg --edit-key [UID]
+</code></pre>
+<p>輸入：<code>toggle</code></p>
+<p>接下來輸入：<code>keytocard</code> 之後選擇：<code>y</code> 接着選擇：<code>1</code> 移動「signature subkey」</p>
+<p>接下來輸入：<code>key 1</code></p>
+<p>重複上面動作輸入：<code>keytocard</code> 之後選擇：<code>2</code> 移動「encryption subkey」</p>
+<p>再次輸入：<code>key 1</code> 接下來輸入：<code>key 2</code></p>
+<p>繼續重複上面動作輸入：<code>keytocard</code> 之後選擇：<code>3</code> 移動「authentication subkey」</p>
+<p>接下來輸入：<code>quit</code>就完成了～</p>
+<h1><h id="others"> 其它 </h></h1>
+<h2><h id="list-keys"> 查看密鑰 </h></h2>
+<p>當我們擁有GPG密鑰之後我們可以通過一下命令查看密鑰：</p>
+<pre><code class="language-bash">gpg --list-keys
+</code></pre>
+<h2><h id="delete-key"> 刪除密鑰 </h></h2>
+<p>在我們導出了GPG密鑰備份並且將其導入到yubikey之後可以將電腦中的GPG密鑰刪除，刪除的命令也非常的簡單：</p>
+<pre><code class="language-bash">gpg --delete-secret-key [UID]
+gpg --delete-key [UID]
+</code></pre>
+<h2><h id="import-key"> 導入密鑰 </h></h2>
+<p>GPG密鑰的很大一部分功能就是用來跟他人通訊，那麼當我們得到他人的公共密鑰(public key)或者想要導入之前導出的密鑰我們就可以使用導入功能：</p>
+<pre><code class="language-bash">gpg --import [Filename]
+</code></pre>
+<h2><h id="trust-key"> 信任密鑰 </h></h2>
+<p>當我們導入密鑰之後，我們可以設置對其的信任等級，這樣更加方便用戶對於密鑰的管理。具體方法如下：</p>
+<pre><code class="language-bash">gpg --edit-key [UID]
+gpg&gt; trust
+Your decision? 5 (Ultimate trust)
+</code></pre>
+<h2><h id="yubikey-not-connect"> 無法連接yubikey </h></h2>
+<p>參考：</p>
+<ul>
+<li><a href="https://github.com/Yubico/yubioath-desktop/issues/172" target="_blank" rel="noopener noreferrer nofollow">github: Connecting to YubiKey…</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/yubikey#Installing_the_OATH_Applet_for_a_Yubikey_NEO" target="_blank" rel="noopener noreferrer nofollow">Installing the OATH Applet for a Yubikey NEO</a></li>
+</ul>
+<p>在有些系統中我們可能無法連接Yubikey，這有可能是沒有啟動pcscd，我們只需要按照如下方法啟動即可（如果運行之後還未成功可以嘗試重啟）：</p>
+<pre><code class="language-bash">$ yaourt -S pcsclite pcsc-tools
+$ sudo systemctl enable pcscd
+$ sudo systemctl start pcscd
+</code></pre>
+<h1><h id="sum"> 總結 </h></h1>
+<p>經過簡單的幾步我們就可以很方便的在日常生活中使用GPG密鑰了。GPG作為如今最為先進高效的且自由的加密工具之一，應該被廣泛的推廣和使用。如今，追求自由已經成為一種責任，很多的安全工具使用起來也更加簡單便捷，希望可以看到更多有能力的人為自由軟件(Free Software)的社區貢獻自己的力量，同時也希望更多的領域可以變得自由(Libre)。我們應該知道，追求自由不但是為了自己，更是為了他人。</p>
+<blockquote>
+<p>Als die Nazis die Kommunisten holten, <br />
+habe ich geschwiegen; <br />
+ich war ja kein Kommunist.</p>
+<p>Als sie die Sozialdemokraten einsperrten, <br />
+habe ich geschwiegen; <br />
+ich war ja kein Sozialdemokrat.</p>
+<p>Als sie die Gewerkschafter holten, <br />
+habe ich nicht protestiert; <br />
+ich war ja kein Gewerkschafter.</p>
+<p>Als sie die Juden holten, <br />
+habe ich geschwiegen; <br />
+ich war ja kein Jude.</p>
+<p>Als sie mich holten, <br />
+gab es keinen mehr, der protestieren konnte.</p>
+<p>—— Friedrich Gustav Emil Martin Niemöller</p>
+</blockquote>
+<p>但願人們能夠銘記歷史教訓，也希望各位小夥伴能夠對筆者文中的錯誤進行指正～</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

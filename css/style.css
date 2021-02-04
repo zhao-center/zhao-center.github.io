@@ -1,0 +1,155 @@
+:root {
+    --background-color: #fff;
+    --text-color: #261b0d;
+}
+a {
+    --hyperlink-color: #00458b;
+}
+a:hover {
+    --hyperlink-color: #6e38b0;
+}
+a[disabled] {
+    --hyperlink-color: #ccc;
+}
+code, pre {
+    --background-color: #eee;
+    --text-color: #000;
+}
+blockquote {
+    --background-color: #f5f5f5;
+    --border-color: #dbdbdb;
+}
+.menu, .info {
+    --background-color: #eee;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1a1a1a;
+        --text-color: #ccc;
+    }
+    a {
+        --hyperlink-color: #8ab5e5;
+    }
+    a:hover {
+        --hyperlink-color: #bb86fc;
+    }
+    a[disabled] {
+        --hyperlink-color: #dbdee0;
+    }
+    code, pre {
+        --background-color: #282c34;
+        --text-color: #abb2bf;
+    }
+    blockquote {
+        --background-color: #282f2f;
+        --border-color: #5e6d6f;
+    }
+    .menu, .info {
+        --background-color: #000;
+    }
+}
+
+html {
+    font-size: 16px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body {
+    font: 1em monospace;
+    line-height: 1.75;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: var(--hyperlink-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+a:hover[disabled] {
+    text-decoration: none;
+}
+
+code,
+pre {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: monospace;
+    font-size: 1em;
+}
+code {
+    border-radius: 3px;
+    padding: .2em .4em;
+    margin: 0;
+}
+pre code {
+    background-color: transparent;
+    color: currentColor;
+    display: block;
+    padding: 1.25em 1.5em;
+}
+
+blockquote {
+    background-color: var(--background-color);
+    border-left: 5px solid var(--border-color);
+    margin: 0;
+    padding: 0.5em 1.5em;
+}
+blockquote p {
+    margin: 0.75em 0;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.menu, .info {
+    background-color: var(--background-color);
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 1em;
+    box-sizing: inherit;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.archives-list {
+    padding-left: 2em;
+}
+
+@media screen and (max-width: 768px) {
+  .archives-date {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .archives-list {
+      list-style: none;
+  }
+  .archives-date {
+    margin-right: 1em;
+  }
+}

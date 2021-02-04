@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>v2ray基礎指南 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="v2ray, proxy, Firefox, Chromium">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>v2ray基礎指南</h1>
+    <h4><time datetime="2017-10-10">2017-10-10</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#download">下載V2Ray</a></li>
+<li><a href="#client">使用客戶端</a>
+<ul>
+<li><a href="#Linux">Linux</a>
+<ul>
+<li><a href="#executing">執行V2Ray</a></li>
+<li><a href="#proxy">開啟代理</a></li>
+<li><a href="#startup-systemd">使用systemd開機自動啟動</a></li>
+<li><a href="#check-systemd-log">查看systemd服務的log</a></li>
+</ul>
+</li>
+<li><a href="#Android">Android</a></li>
+</ul>
+</li>
+<li><a href="#sum">總結</a></li>
+</ul>
+<p><a href="https://www.v2ray.com/" target="_blank" rel="noopener noreferrer nofollow">V2Ray</a>是一個憤憤不平的產物，是對自由的呼喚。在2015年<a href="https://zh.wikipedia.org/wiki/Shadowsocks" target="_blank" rel="noopener noreferrer nofollow">Shadowsocks</a>、<a href="https://zh.wikipedia.org/wiki/GoAgent" target="_blank" rel="noopener noreferrer nofollow">GoAgent</a>等「科學上網」技術的作者被集體約談之後，V2Ray的發起者決定抗起「科學上網」的大旗，他曾經寫道：</p>
+<blockquote>
+<p>我是只是一名普通的开发人员，已肉翻，本已不依赖这些翻墙工具，但 ShadowSock 和 GoAgent 被迫删除代码的事件实在太恶心，不得不做点什么了。</p>
+</blockquote>
+<p>V2Ray開發至今，已經非常成熟，並且方便使用，今天主要是講解一下作為用戶應該如何使用。首先，列出一些可供各位看官參閱的資料：</p>
+<ul>
+<li><a href="https://github.com/v2ray/v2ray-core" target="_blank" rel="noopener noreferrer nofollow">V2Ray源代碼</a></li>
+</ul>
+<h1><h id="download"> 下載V2Ray </h></h1>
+<p>最新版本的V2Ray可以從官方網站尋找，也可以直接在github上下載：</p>
+<ul>
+<li><a href="https://www.v2ray.com/" target="_blank" rel="noopener noreferrer nofollow">V2Ray官方網站</a></li>
+<li><a href="https://github.com/v2ray/v2ray-core/releases/" target="_blank" rel="noopener noreferrer nofollow">V2Ray的github下載頁面</a></li>
+</ul>
+<h1><h id="client"> 使用客戶端 </h></h1>
+<p>全部<a href="https://www.v2ray.com/chapter_01/3rd_party.html" target="_blank" rel="noopener noreferrer nofollow">第三方客戶端</a>請上官網查看，這裡只給大家介紹筆者推薦的客戶端。</p>
+<h2><h id="Linux"> Linux </h></h2>
+<h3><h id="executing"> 執行V2Ray </h></h3>
+<p>下載完畢後解壓縮，將<code>config.json</code>拷貝到解壓後的目錄，進入解壓後的目錄，運行<code>v2ray</code>：</p>
+<pre><code class="language-bash">./v2ray
+</code></pre>
+<p>如果無法運行，右鍵查看v2ray的屬性(Properties)看看是否設定為可執行(executing)，勾選完畢後再執行就可以了。</p>
+<p>開始運行會提示V2Ray在哪個地址的哪個端口運行，例如：</p>
+<pre><code>2000/01/01 00:00:00 [Info]TCP|Listener: Listening on 127.0.0.1:1080
+</code></pre>
+<p>那麼代理地址就是<code>127.0.0.1</code>，端口就是<code>1080</code>。</p>
+<h3><h id="proxy"> 開啟代理 </h></h3>
+<p>V2Ray運行後便需要將瀏覽器的代理功能開啟，或者開啟系統全局代理就可以了。</p>
+<h4>Firefox</h4>
+<p>在Firefox中：</p>
+<p>menu &gt;&gt; Preferences &gt;&gt; Advanced &gt;&gt; Network &gt;&gt; Setting &gt;&gt; Manual proxy configuration</p>
+<p>在 SOCKS Host 中填寫之前記住的代理地址，在 Port 中填寫之前記住的端口</p>
+<h4>Chromium</h4>
+<p>Chromium中的代理功能比較簡單，是直接跟隨系統全局代理的：</p>
+<p>menu &gt;&gt; Settings &gt;&gt; Show advanced settings… &gt;&gt; Network &gt;&gt; Change proxy settings…</p>
+<p>通常情况下会直接弹出系统的代理设置，如果没有弹出的话自己打开系统设置或者按照命令行指示进行就可以了</p>
+<h3><h id="startup-systemd"> 使用systemd開機啟動V2Ray </h></h3>
+<p>每次開機自動啟動V2Ray可以很大程度上提升用戶體驗，V2Ray官網就有<a href="https://www.v2ray.com/chapter_01/install.html" target="_blank" rel="noopener noreferrer nofollow">很詳細的配置介紹</a>。在這裡筆者簡單的講述一下通過systemd的實現方法。</p>
+<p>首先我們先路徑(directory)：<code>/lib/systemd/system/</code>下建立一個<code>v2ray.service</code>文件，例如：</p>
+<pre><code class="language-bash">vim /lib/systemd/system/v2ray.service
+</code></pre>
+<p>然後編輯<code>v2ray.service</code>文件如下：</p>
+<pre><code>[Unit]
+Description=V2Ray Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/v2ray.pid
+ExecStart=/your/v2ray/application/path -config /your/v2ray/config.json/path
+# you need to config the line above
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>其中標註的那一行需要進行修改，修改之後就可以保存並退出了（在vim中請使用<code>:wq</code>保存並退出，更多關於vim的知識可以查看筆者寫的<a href="https://zhao.center/post/vim-study-note-beginner/" target="_blank" rel="noopener noreferrer nofollow">「Vim學習筆記：與鍵盤最優雅的距離」</a>）。然後，我們需要開啟<code>v2ray.service</code>（這裡不同的發行版(distro)可能存在些許的差別，這裡以「Arch Linux」為例）：</p>
+<pre><code class="language-bash">systemctl enable v2ray.service
+</code></pre>
+<p>這樣就大功告成了～如果想要關閉服務可以使用：</p>
+<pre><code class="language-bash">systemctl disable v2ray.service
+</code></pre>
+<p>詳細的systemd使用方法可以參考「Arch Linux Wiki」的教程：<a href="https://wiki.archlinux.org/index.php/systemd" target="_blank" rel="noopener noreferrer nofollow">systemd</a></p>
+<h3><h id="check-systemd-log"> 查看systemd服務的log </h></h3>
+<p>如果直接使用V2Ray，在出現錯誤的時候我們可以直接查看其log。但是在systemd中我們如何查看<code>v2ray.service</code>的log呢：</p>
+<pre><code class="language-bash">journalctl -u v2ray.service
+</code></pre>
+<p>這個方法也適用於查看其它<code>service</code>的log，這樣我們就可以很快的鎖定問題了。</p>
+<h2><h id="Android"> Android </h></h2>
+<p>從PlayStore下載：</p>
+<ul>
+<li><del><a href="https://play.google.com/store/apps/details?id=com.v2ray.actinium" target="_blank" rel="noopener noreferrer nofollow">Actinium</a></del>（Actinium好像停止開發了，請選擇其他的替代品）</li>
+<li><a href="https://play.google.com/store/apps/details?id=com.v2ray.ang" target="_blank" rel="noopener noreferrer nofollow">v2rayNG</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.github.dawndiy.bifrostv" target="_blank" rel="noopener noreferrer nofollow">BifrostV</a></li>
+</ul>
+<p>以上軟體的配置方法也是一個道理，將配置文件<code>config.json</code>倒入到手機中就可以使用了</p>
+<h1><h id="sum"> 總結 </h></h1>
+<p>V2Ray不是一個簡單的軟件，但它完成了它該擁有的使命，很多時候不是我們想要複雜而是時代或者社會在驅使着我們變得複雜，希望諸位引以為戒。</p>
+<p>不忘初心，方得始終</p>
+<p>敬上</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

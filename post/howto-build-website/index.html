@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>如何搭建一個網站：暨宣傳筆者的新網站 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="namecheap, godaddy, Domain Name, github, cloudflare, 網站">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>如何搭建一個網站：暨宣傳筆者的新網站</h1>
+    <h4><time datetime="2017-08-21">2017-08-21</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#intro">前言</a></li>
+<li><a href="#purchase-domain">購買域名</a></li>
+<li><a href="#github-pages">使用「GitHub Pages」進行託管</a>
+<ul>
+<li><a href="#change-content">修改網站內容</a></li>
+<li><a href="#CNAME">添加CNAME</a></li>
+<li><a href="#404page">添加404頁面</a></li>
+</ul>
+</li>
+<li><a href="#cloudflare">使用「Cloudflare」保護網站</a>
+<ul>
+<li><a href="#cloudflare_DNS">使用「Cloudflare」的DNS</a></li>
+<li><a href="#cloudflare_HTTPS">HTTPS設置</a></li>
+</ul>
+</li>
+<li><a href="#sum">總結</a></li>
+</ul>
+<h1><h id="intro"> 前言 </h></h1>
+<p>最近筆者因為手頭的事情比較多，所以有一段時間沒有發送文章了，手上的草稿就壓了一堆了，Todo列表中想到為網站添加的功能也存了一大堆。雖然攢了一大堆的事情要做，但是筆者突然想做一個看起來更加美觀的網站，順便註冊一個更加高大上的域名，於是<a href="https://zhaox.ch/" target="_blank" rel="noopener noreferrer nofollow">「zhaox.ch」</a>就誕生了。ch是瑞士的頂級域名，給人一種安全的感覺，曾經也是深受各路計算機大神的歡迎，所以註冊zhao.ch就顯得天方夜譚了，這種域名早就被搶注光了。測試了幾個域名之後決定就在直接在後面加一個x好了，名字就叫「X居所」。這個域名以後將作為筆者所有對外信息公開的中樞，相當於是一個個人介紹網站。這也是受到了以下幾個網站的啟發：<a href="https://rakugaki.me/" target="_blank" rel="noopener noreferrer nofollow">落書</a>、<a href="https://nichijou.com/" target="_blank" rel="noopener noreferrer nofollow">nichijou</a>（剩下的已經記不起來了，因為這個網站構想很久了，期間瀏覽的網站不計其數了吧）。</p>
+<p>這次的網站製作可以說是從新來過，筆者對各種流程的認知也有了一定的提升，既然現在可以有地方記錄下自己的經歷供大家分享，筆者就決定將自己搭建網站的過程總結一下，這篇文章也就應運而生了。下面將要介紹的內容其實是不太有先後順序的，且網站搭建過程中可能還會有其它步驟，這些只是筆者習慣的步驟和順序，希望可以供各位看官參考。</p>
+<h1><h id="purchase-domain"> 購買域名 </h></h1>
+<p>搭建一個網站最重要的就是購買域名了，雖然很多網站（例如：github）都提供域名，但是那些都屬於二級域名(Second-level domain)。域名(Domain name)就像是一張名片，總是把自己的東西掛在別人下面總歸從體驗上不是什麼好事吧？而且域名的價格一般都不是很貴，如果不是去買我這種(.center)相對小眾的域名，那些主流的域名(例如：.com, .org etc.)還是很便宜的。</p>
+<p>先簡單說一下背景，我們的互聯網可以說是由<a href="https://en.wikipedia.org/wiki/ICANN" target="_blank" rel="noopener noreferrer nofollow">ICANN(The Internet Corporation for Assigned Names and Numbers)</a>來運營和維護的，分配和管理<a href="https://en.wikipedia.org/wiki/Domain_name" target="_blank" rel="noopener noreferrer nofollow">域名(Domain name)</a>就是其中的一項服務，但是人家組織太忙了，於是就有<a href="https://en.wikipedia.org/wiki/Domain_name_registrar" target="_blank" rel="noopener noreferrer nofollow">域名註冊商(Domain name registrar)</a>來幫忙。最初的域名註冊是不收費的，後來維護成本增加，於是ICANN就收取維護費用（因為它是非贏利組織），所以如果我們看不同的註冊商網站，同一個域名價錢不同，那就是因為不同註冊商賺的錢不同。以下言論全是筆者意譯，不是很嚴謹，具體請自行查約相關內容，原則上，域名的註冊人擁有這個域名，所以我們可以自由的切換到不同的域名註冊商，當然切換之後你還需要再交一遍服務費。背景就簡單的介紹到這裡，域名註冊商有很多個，筆者就簡單的說一下自己的想法。</p>
+<p>首先要說的就是，最好選擇國外的域名提供商，為什麼不推薦國內的具體原因就不贅述了。然後說說筆者的經歷，現在這個域名(<a href="https://zhao.center/" target="_blank" rel="noopener noreferrer nofollow">zhao.center</a>)的域名提供商是<a href="https://www.godaddy.com/" target="_blank" rel="noopener noreferrer nofollow">GoDaddy</a>，這個可以說是世界知名的提供商了，幾乎談不上什麼缺點，就是長期使用有點小貴，但是穩定性和服務質量都很不錯，而且一般都會有第一年打折，比較推薦新手使用。現在這個域名<a href="https://zhaox.ch/" target="_blank" rel="noopener noreferrer nofollow">「zhaox.ch」</a>則是使用了<a href="https://www.namecheap.com/" target="_blank" rel="noopener noreferrer nofollow">namecheap</a>，更換這個域名提供商的首要原因是因為評價比較高，無論是身邊朋友還是網上都比較推薦它，其次，這個註冊商的價位比較合理，長期來講比GoDaddy要便宜很多。在使用namecheap的管理系統的時候也感覺更加簡單和便捷，相比之下，GoDaddy就彷彿全是廣告。當然，因為才進行註冊，真正的使用體驗還不好隨便下結論，大家還要自己判斷一下～</p>
+<h1><h id="github-pages"> 使用「GitHub Pages」進行託管 </h></h1>
+<p><a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer nofollow">「GitHub Pages」</a>目前是靜態網站的首選，無論是免費的服務還是網站的名氣都讓人有一種安全感，適合長久、穩定的使用。另外，「GitHub Pages」的使用也非常的簡單，詳細介紹可以到官網查看，以下筆者來簡單介紹一下～</p>
+<p>首先，我們需要一個github賬號，每個github賬號可以創建一個和其賬號用戶名字相同的站點（格式為username.github.io）。下面我們來創建一個新的repo，例如：username.github.io</p>
+<p>接下來，在終端輸入：</p>
+<pre><code class="language-bash">$ git clone https://github.com/username/username.github.io
+</code></pre>
+<p>如果有需要區分git信息的朋友現在需要做一下設置：</p>
+<pre><code class="language-bash">$ git config user.name &quot;username&quot;
+$ git config user.email &quot;example@example.com&quot;
+</code></pre>
+<p>這樣設置之後這個路徑下的git信息就和全局有所區分了～這些信息我們可以通過一下命令查看：</p>
+<pre><code class="language-bash">$ git config --list
+</code></pre>
+<p>如果有什麼添加或修改其它信息的需求，應該在這一步做完，要不然之後會出現在git的log中。以上這些都是git的知識，是筆者比較在意的，再多就不進行贅述了。</p>
+<p>現在我們言歸正傳，先移動到克隆下來的路徑(directory)，將之前製作的靜態網頁複製到這個路徑下面：</p>
+<pre><code class="language-bash">$ cd username.github.io
+</code></pre>
+<p>然後push本地的文件：</p>
+<pre><code class="language-bash">$ git add --all
+$ git commit -m &quot;Initial commit&quot;
+$ git push -u origin master
+</code></pre>
+<p>現在在瀏覽器中輸入我們的網址～發現網站已經上線了。</p>
+<h2><h id="change-content"> 修改網站內容 </h></h2>
+<p>正常情況下，以後每次做出修改之後只需要使用如下命令就可以push了：</p>
+<pre><code class="language-bash">$ git add -A
+$ git commit -m &quot;commit&quot;
+$ git push
+</code></pre>
+<h2><h id="CNAME"> 添加CNAME </h></h2>
+<p>現在我們已經可以瀏覽自己的網站了，但是並非通過我們自己的域名訪問的。托github的福～這時候我們只需要在repo中添加一個CNAME文件，然後在文件中輸入我們的域名（例如：example.com）就可以了：</p>
+<pre><code class="language-bash">$ echo &quot;example.com&quot; &gt; CNAME
+</code></pre>
+<h2><h id="404page"> 添加404頁面 </h></h2>
+<p>404頁面也是如此，我們只需要創建一個叫做404.html的文件就可以自定義404頁面了~</p>
+<h1><h id="cloudflare"> 使用「Cloudflare」保護網站 </h></h1>
+<p>接下來我們我們需要給我們的網站加些保護措施，在這裡筆者選擇的是鼎鼎大名的「Cloudflare」。它提供全套網絡安全與性能解決方案，幾乎很難去概括「Cloudflare」的服務內容。之所以使用「Cloudflare」不但是因為它可以使網站更加安全，還可以起到給「GitHub Pages」分流、添加HTTPS支持等作用，甚至可以提供Unicode解析支持和ipv6的支持。</p>
+<h2><h id="cloudflare_DNS"> 使用「Cloudflare」的DNS </h></h2>
+<p>下面筆者來說一下如何使用「Cloudflare」首先需要註冊一個賬戶，如今的「Cloudflare」使用起來已經非常的簡單了，註冊之後的幾乎所有步驟都是自動的，我們只需要一直點continue就可以了。註冊完成後我們會發現網站並為active，這是因為我們還為添加「Cloudflare」的DNS到我們的域名中。這時候我們就需要登陸我們的域名服務商網站進行修改，在域名提供商修改完畢DNS之後我們可能需要等待一段時間（24小時以內）。之後在「Cloudflare」上面點擊Recheck Nameservers就可以了。</p>
+<p>但是我們還是需要做一些必要的設置，點擊DNS設置，將記錄中的@刪除，然後切換成github提供的IP地址。在筆者寫本篇文章的時候github提供的IP如下：</p>
+<pre><code>192.30.252.153
+192.30.252.154
+</code></pre>
+<p>具體參照：<a href="https://help.github.com/articles/setting-up-an-apex-domain/" target="_blank" rel="noopener noreferrer nofollow">https://help.github.com/articles/setting-up-an-apex-domain/</a></p>
+<p>我們還可以修改其它的信息比如通過修改CNAME更改次級域名(subdomain)，github的網站里有詳盡的描述：<a href="https://help.github.com/articles/quick-start-setting-up-a-custom-domain/" target="_blank" rel="noopener noreferrer nofollow">https://help.github.com/articles/quick-start-setting-up-a-custom-domain/</a></p>
+<h2><h id="cloudflare_HTTPS"> HTTPS設置 </h></h2>
+<p>為了更安全的網絡環境，我們要將網站變成強制HTTPS。首先進入Crypto然後開啟HSTS，設置可以參照如下方案：</p>
+<pre><code>Status: On
+Max-Age: 1 month
+Include subdomains: Off
+Preload: On
+No-sniff: On
+</code></pre>
+<p>然後可以順便將「Automatic HTTPS Rewrites」選項開啟，這樣就大功告成了～</p>
+<h1><h id="sum"> 總結 </h></h1>
+<p>如今，個人網站的風氣已經漸漸被淡化，取而代之的是各種社交媒體。筆者最初是挺反感的，不過漸漸覺得這其實也不一定是一件壞事，因為小眾多少會帶來更高質量的圈子。個人站點依然會一直留存下來，它是一個個人與世界交流的窗口，是接近自由言論的象徵。我們無需去強求什麼，只求更多的人可是接觸並使用到毫無雜念的、純凈的東西。希望諸位能夠從筆者的文章中得到啟發，也希望能夠對筆者文中的錯誤進行指正，如果有通過閱讀筆者文章搭建站點的朋友也請告知～願友人安康</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

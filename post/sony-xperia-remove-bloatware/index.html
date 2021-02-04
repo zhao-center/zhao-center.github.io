@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>「Sony Xperia」內置應用刪除 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="Sony, 手機, 內置應用">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>「Sony Xperia」內置應用刪除</h1>
+    <h4><time datetime="2017-11-08">2017-11-08</time> | 拂衣</h4>
+</header>
+
+<div>
+    <h1>目錄</h1>
+<ul>
+<li><a href="#intro">前言</a></li>
+<li><a href="#todo">操作</a>
+<ul>
+<li><a href="#todo-on-phone">手機上的操作</a>
+<ul>
+<li><a href="#deal-with-app">對應用的處理</a></li>
+<li><a href="#open-dev-mod">打開開發者模式</a></li>
+</ul>
+</li>
+<li><a href="#todo-on-computer">電腦上的操作</a></li>
+</ul>
+</li>
+</ul>
+<h1><h id="intro"> 前言 </h></h1>
+<p>Sony的Xperia系列是一個非常好的手機系列，因為這個系列中的大部分手機都支持「Android Open Source Project (AOSP)」而且其本身在<a href="https://github.com/sonyxperiadev" target="_blank" rel="noopener noreferrer nofollow">Github上的開源項目</a>就非常豐富。雖然對於筆者這種追求軟件自由的人來說，還是有很多不如意的地方，但是這在如今的大型手機廠商中算是一股清流了。加上Sony自身獨有的信仰屬性，真的是手機中的不二選擇。如今，「Xperia ZX1 Compact」出來之後可以說是目前少有的小型旗艦機，有信仰的粉絲可以多多的支持。</p>
+<p>言歸正傳，大部分人買完Android手機之後總是被其中的內置應用（預裝應用）所煩惱。如今很多預裝應用都可以<code>disable</code>，不過還是能在應用設置中找到，有些甚至都不能<code>disable</code>比如「Xperia」裡面的「What’s new」應用。本篇文章就是講述在不<code>root</code>的情況下如何清除這些內置應用，這個方法其實應該是應用於所有機型的，本篇文章題目純屬打廣告(:</p>
+<p>下面先放出一些參考資料：</p>
+<ul>
+<li><a href="https://developer.sonymobile.com/open-devices/" target="_blank" rel="noopener noreferrer nofollow">Sony Open devices</a></li>
+<li><a href="https://forum.xda-developers.com/xperia-xz1-compact/help/uninstall-bloatware-method-application-t3693917" target="_blank" rel="noopener noreferrer nofollow">xda-developers “uninstall bloatware, method and which application remove”</a></li>
+<li><a href="https://forum.xda-developers.com/xperia-xz1-compact/help/managed-to-hide-whats-app-root-t3681393" target="_blank" rel="noopener noreferrer nofollow">xda-developers “[Q] Anyone managed to hide ‘What’s New’ app without root?”</a></li>
+</ul>
+<h1><h id="todo"> 操作 </h></h1>
+<h2><h id="todo-on-phone"> 手機上的操作 </h></h2>
+<h3><h id="deal-with-app"> 對應用的處理 </h></h3>
+<p>為了使刪除之後的殘留更少，我們首先要<code>disable</code>想要刪除的應用，然後<code>delete cache</code>和<code>delete data</code>。如果以上操作無法進行，最好也進行<code>force stop</code>來停止應用運行。在「Xperia」中，以上操作可以進入這裡找到 Settings &gt;&gt; Apps&amp;notifications &gt;&gt; App info</p>
+<h3><h id="open-dev-mod"> 打開開發者模式 </h></h3>
+<p>然後就需要打開「開發者模式」了，在「Xperia」上，我們需要進入 Settings &gt;&gt; System &gt;&gt; About phone &gt;&gt; Build number，之後我們需要點擊「Build number」七次，從而打開「Developer options」。接下來進入其中，開啟「USE debugging」手機上的操作就完成了。</p>
+<h2><h id="todo-on-computer"> 電腦上的操作 </h></h2>
+<p>首先，去<a href="https://developer.android.com/studio/releases/platform-tools.html" target="_blank" rel="noopener noreferrer nofollow">官方網站</a>下載「SDK Platform Tools」解壓之後進入解壓後的路徑：</p>
+<pre><code class="language-bash">$ cd your/path/for/platform-tools
+</code></pre>
+<p>然後我們可以將手機與電腦連接，接下來在<code>terminal</code>中輸入以下命令來查看設備是否連接：</p>
+<pre><code class="language-bash">$ ./adb devices
+</code></pre>
+<p>如果連接會出現設備名和序列號，同時手機端也會有連接提示，點擊確認即可。</p>
+<p>接下來輸入如下命令來查看<code>deactivated</code>的應用：</p>
+<pre><code class="language-bash">$ ./adb shell pm list packages -d
+</code></pre>
+<p>根據顯示出來的列表，我們可以找到之前被<code>disable</code>的應用，然後輸入如下命令刪除即可：</p>
+<pre><code class="language-bash">$ ./adb shell pm uninstall -k --user 0 &lt;package name&gt;
+</code></pre>
+<p>有些應用是不能被<code>disable</code>所以就不會出現在之前的<code>list</code>里，不過在上網查到它的名稱之後也可以用同樣的方法刪除，比如「Xperia」裡面的「What’s new」應用的名稱是<code>com.sonymobile.entrance</code>。筆者還總結了其它的可能需要刪除的包裹名稱，如下：</p>
+<pre><code>com.amazon.kindle
+com.amazon.mShop.android.shopping
+com.facebook.katana
+com.facebook.services
+com.facebook.system
+com.facebook.appmanager
+com.spotify.music
+com.s.antivirus
+com.sony.tvsideview.videoph
+com.sonymobile.moviecreator.rmm
+com.sonyericsson.xhs
+com.google.android.videos
+com.google.android.music
+</code></pre>
+<p>這樣我們不需要的內置應用就全部刪除啦～enjoy! (つ´ω`)つ</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

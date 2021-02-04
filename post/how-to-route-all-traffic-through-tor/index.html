@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>如何讓所有流量都使用Tor？ - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="講到匿名上網就會想到Tor，其匿名和安全性可以說在同類軟件中是數一數二的（當然，前提是在合理且科學的使用方法下）。而且在「Tor Browser」推出之後，使用Tor上網更加便捷，也被越來越多的普通人所接受。雖然用Tor瀏覽網頁便捷了，但配置系統中的每個程序使用Tor還是非常麻煩，往往需要單獨配置。那麼有人可能就會想，如何讓所有流量都使用Tor？答案是：沒有辦法。">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="Tor, 計算機, 加密, 安全">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>如何讓所有流量都使用Tor？</h1>
+    <h4><time datetime="2019-08-17">2019-08-17</time> | 拂衣</h4>
+</header>
+
+<div>
+    <p>講到匿名上網就會想到<a href="https://en.wikipedia.org/wiki/Tor_(anonymity_network)" target="_blank" rel="noopener noreferrer nofollow">Tor</a>，其匿名和安全性可以說在同類軟件中是數一數二的（當然，前提是在合理且科學的使用方法下）。而且在「Tor Browser」推出之後，使用Tor上網更加便捷，也被越來越多的普通人所接受。雖然用Tor瀏覽網頁便捷了，但配置系統中的每個程序使用Tor還是非常麻煩，往往需要單獨配置。那麼有人可能就會想，如何讓所有流量都使用Tor？答案是：沒有辦法。</p>
+<p><strong><font color="red">⚠️解釋為什麼沒有辦法之前，筆者首先需要聲明：Tor理論上是安全的，但是實際上讓使用者身份曝露的方法有很多（例如，當使用者的“所有”流量都使用相同的Tor網路的情況下，那些有身份信息的流量，像是登陸某網路服務賬號，就有可能成為曝露身份的導火索）。本文只是交流「如何讓所有流量都使用Tor？」這一技術問題，其它一概非本文討論之範圍。使用Tor時發生泄露個人隱私、身份等事件，都與筆者無關。使用Tor進行任何非法行為，或是在任何禁止使用Tor的國家非法使用Tor的行為，都與筆者無關。最後，希望諸位可以在任何時候保持獨立思考</font></strong></p>
+<p>言歸正傳，沒有辦法的原因很簡單，Tor並非什麼Protocol都支持，比如<a href="https://en.wikipedia.org/wiki/Ping_(networking_utility)" target="_blank" rel="noopener noreferrer nofollow">ping</a>使用的就是 Internet Control Message Protocol (ICMP) 這種Protocol就不能使用Tor。另外，UDP也不可以，Tor只提供了一個UDP的DnsPort。那我們要怎麼「如何讓所有流量都使用Tor？」呢？其實很簡單，那就是把不能走Tor的流量全部封鎖就好了（這裡可以參考一下著名匿名Linux發行版：<a href="https://tails.boum.org/contribute/design/Tor_enforcement/" target="_blank" rel="noopener noreferrer nofollow">Tails的設計思路</a>）！這個看似掩耳盜鈴的做法其實是非常有效的，因為流量走的越少就越安全，而且鑑於大部分程序都是會支持TCP的，在日常生活的使用中應該不會遇到太多的不方便。</p>
+<p>實現的方法看起來也很簡單，那就是使用<code>iptables</code>或者其“替代者”：<code>nftables</code>進行一些操作就可以了。在網路上有很多類似的模板可以“借鑑”，但是說實話整合起來還是太麻煩了。好在已經有人寫好了script供我們使用，隆重介紹：<a href="https://github.com/SusmithKrishnan/torghost" target="_blank" rel="noopener noreferrer nofollow">TorGhost</a>，還有它的fork：<a href="https://github.com/3ndG4me/torphantom" target="_blank" rel="noopener noreferrer nofollow">TorPhantom</a></p>
+<h1>TorGhost</h1>
+<p><a href="https://github.com/SusmithKrishnan/torghost" target="_blank" rel="noopener noreferrer nofollow">TorGhost</a>從簡介來看應該是專門針對「Kali Linux」開發的，筆者使用起來覺得非常簡單方便，推薦大家使用。但是Arch的用戶怎麼辦呢？筆者本身想自己寫一個的，沒想到發現了下面這個fork。</p>
+<h1>TorPhantom</h1>
+<p><a href="https://github.com/3ndG4me/torphantom" target="_blank" rel="noopener noreferrer nofollow">TorPhantom</a>其實才是本篇文章的重點，因為TorPhantom除了可以在Debian系使用，還加入了Arch等其他distro的支持，甚至支持macOS。除此之外它還加入了<code>macchanger</code>的功能，通過更改MAC加強了使用時的匿名性。不過在使用過程中還是有一些小的問題（有些小問題確實沒有太好的解決辦法，個人覺得是原作者妥協的結果）：</p>
+<h3>0. &lt;interface(s)&gt;</h3>
+<p>在說問題之前，為了防止有人連&lt;interface(s)&gt;代表什麼都不知道，筆者先簡單介紹一下該如何查看。這裡的&lt;interface(s)&gt;是指「network interface(s)」（這裡用詞也不是很嚴謹，高手不要戳破(*/ω＼*)），只需要使用<code>ifconfig</code>就可以直接查看其名稱和MAC地址了。</p>
+<h3>1. macchanger的問題</h3>
+<p>首先就是macchanger的問題，如果我們使用：</p>
+<pre><code class="language-bash">torphantom start -i &lt;interface(s)&gt;
+</code></pre>
+<p>TorPhantom會使用macchanger將MAC改變，但是當我們使用：</p>
+<pre><code class="language-bash">torphantom stop
+</code></pre>
+<p>TorPhantom並不會將被改變的MAC還原，這段代碼確實不好設計，因為torphantom本身是無法得知之前用戶使用了哪個interface(s)的。如果還原所有的interface(s)，可能導致用戶在其它場景下改變的MAC一同被還原。不過，如果能在stop的時候告知用戶MAC並為被還原可能是一個更好的解決辦法。那麼我們該如何手動還原呢？只需要下面這行命令：</p>
+<pre><code class="language-bash">macchanger -p &lt;interface&gt;
+</code></pre>
+<p>然後我們可以使用如下命令查看目標interface(s)是否還原了：</p>
+<pre><code class="language-bash">macchanger -s &lt;interface&gt;
+</code></pre>
+<p>如果<code>Current MAC</code>和<code>Permanent MAC</code>一致，就說明被還原了。</p>
+<h3>2. 如何uninstall</h3>
+<p>另一個問題就是沒有uninstall，這個其實很好解決，首先讓<code>torphantom stop</code>然後：</p>
+<pre><code class="language-bash">rm /usr/bin/torphantom
+</code></pre>
+<p>就大功告成了。或者在Arch Linux下直接使用AUR安裝應該也很方便卸載，不過筆者並沒有進行測試。</p>
+<h1>測試匿名性</h1>
+<p>這兩個script筆者都有粗略的過了一遍源碼，所以還是比較放心的。但是如果使用的是其它的匿名手段如何測試其隱秘性呢？</p>
+<p>一下幾點大家可以注意一下，算是拋磚引玉，實際需要注意的會更多：</p>
+<ol>
+<li>看看自己的ip address;</li>
+<li>上網做一下DNS leak test;</li>
+<li>ping一下，應該是被禁止的；</li>
+<li>…;</li>
+</ol>
+<h1>總結</h1>
+<p>只要上網就沒有絕對的匿名和安全，想要絕對匿名和安全的人早就已經斷網了。這並非是一個不可取的操作，但是對於普通人來說如何平衡科技帶來的便利和威脅是一個需要持續思考的問題。希望大家都能找到適合自己的解決辦法ヾ(●゜▽゜●)♡ </p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>

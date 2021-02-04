@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>Bash中有趣的常用快捷鍵 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="剛剛接觸bash的人總會有些迷茫，加之不熟練導致其輸入效率很低。很多新手爲了修改前面一個單詞的拼寫錯誤就不得不將後面的內容一併刪除，這時候學會一些簡單的快捷鍵勢必可以提升效率。筆者希望通過本篇文章整理一些bash的常用快捷方式，順帶介紹一些快捷鍵的歷史，希望能對各位看官有所幫助。">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="Bash, Shortcut">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>Bash中有趣的常用快捷鍵</h1>
+    <h4><time datetime="2020-08-28">2020-08-28</time> | 拂衣</h4>
+</header>
+
+<div>
+    <p>剛剛接觸<code>bash</code>的人總會有些迷茫，加之不熟練導致其輸入效率很低。很多新手爲了修改前面一個單詞的拼寫錯誤就不得不將後面的內容一併刪除，這時候學會一些簡單的快捷鍵勢必可以提升效率。筆者希望通過本篇文章整理一些<code>bash</code>的常用快捷方式，順帶介紹一些快捷鍵的歷史，希望能對各位看官有所幫助。</p>
+<p><em><p style="color: red">注：本篇僅使用日常用語陳述，其術語使用並不一定精準，技術細節請參閱官方文檔</p></em></p>
+<ul>
+<li><a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener noreferrer nofollow">GNU Bash official</a></li>
+</ul>
+<p>需要着重說明的是文中有時會將<code>shell</code>、<code>terminal</code>等概念混用，如果想有更深入的瞭解請查看以下回答：</p>
+<ul>
+<li><a href="https://askubuntu.com/q/506510" target="_blank" rel="noopener noreferrer nofollow">What is the difference between Terminal, Console, Shell, and Command Line?</a></li>
+<li><a href="https://unix.stackexchange.com/q/4126" target="_blank" rel="noopener noreferrer nofollow">What is the exact difference between a ‘terminal’, a ‘shell’, a ‘tty’ and a ‘console’?</a></li>
+</ul>
+<p>其實<code>bash</code>中的很多快捷鍵並不需要特意去學，如果對<code>emacs</code>有所瞭解的話就不難發現<code>bash</code>的快捷鍵和<code>emacs</code>的如出一轍。這其實並非巧合，<code>bash</code>默認的編輯模式就是<code>emacs mode</code>。當然對於喜歡<code>vi</code>的用戶，<code>bash</code>也提供了<code>vi mode</code>（準確的來說<code>vi mode</code>和<code>emacs mode</code>是得益於<a href="https://en.wikipedia.org/wiki/GNU_Readline" target="_blank" rel="noopener noreferrer nofollow">GNU Readline</a>）。使用方法就是在<code>.bashrc</code>中加入：</p>
+<pre><code class="language-bash">set -o vi
+</code></pre>
+<p>在<code>bash</code>中常用的一些<code>emacs</code>快捷方式有：</p>
+<pre><code class="language-bash">ctrl-a  # Move cursor to beginning of line
+ctrl-e  # Move cursor to end of line
+meta-b  # Move cursor back one word
+meta-f  # Move cursor forward one word
+ctrl-w  # Cut the last word
+ctrl-u  # Cut everything before the cursor
+ctrl-k  # Cut everything after the cursor
+ctrl-y  # Paste the last thing to be cut
+ctrl-_  # Undo 
+ctrl-r  # Incremental search backward
+ctrl-g  # Quitting and Aborting
+</code></pre>
+<p>在<code>bash</code>中常用的一些<code>vi</code>快捷方式有：</p>
+<pre><code class="language-bash">h       # Move cursor left
+l       # Move cursor right
+b       # Move cursor back one word
+w       # Move cursor forward one word
+A       # Move cursor to end of line and put in insert mode
+0       # (zero) Move cursor to beginning of line (doesn't put in insert mode)
+i       # Put into insert mode at current position
+a       # Put into insert mode after current position
+dd      # Delete line (saved for pasting)
+D       # Delete text after current cursor position (saved for pasting)
+p       # Paste text that was deleted
+j       # Move up through history commands
+k       # Move down through history commands
+u       # Undo 
+</code></pre>
+<p>以上部分參考自：<a href="https://mywiki.wooledge.org/set-o-vi-emacs" target="_blank" rel="noopener noreferrer nofollow">Emacs and Vi modes in Bash</a></p>
+<p>順便一提，如果<code>vi</code>和<code>emacs</code>都不會的話不如趁機學一個，熟練之後應該會對提升文字工作的處理效率大有裨益。如果有興趣學習<code>vim</code>可以查看筆者的文章：<a href="https://zhao.center/post/vim-study-note-beginner/" target="_blank" rel="noopener noreferrer nofollow">「Vim學習筆記：與鍵盤最優雅的距離」</a></p>
+<p>除了上面說的這些便於編輯文字的快捷鍵還有很多其它有趣的快捷鍵，有些按鍵的使用甚至可以追溯到使用打字機的時代。那麼就讓筆者用情景再現的方式來分別介紹一下：</p>
+<h3>如何停止程式？</h3>
+<p>在使用<code>bash</code>的過程中我們很可能遇到輸入，甚至執行錯命令的情況。筆者最初接觸<code>bash</code>的時候往往不知所措，尤其是卡在沒有終止的loop或者不知道該按什麼按鍵才能繼續的命令中，這時候筆者只能選擇關閉終端(Terminal)甚至是強制關機。通常情況退出的方法非常簡單，我們只需要掌握如下兩個快捷鍵：</p>
+<ul>
+<li><code>&lt;Ctrl-C&gt;</code>是用於中斷當前運行程序的(terminate the current process)</li>
+<li><code>&lt;Ctrl-D&gt;</code>是用來退出命令的(exit shell command)
+其中<code>&lt;Ctrl-C&gt;</code>最為常用所以寫在前面，<code>&lt;Ctrl-D&gt;</code>的使用機會也不少，比如在使用<code>passwd</code>命令的時候，如果想取消更改密碼就很有用處。</li>
+</ul>
+<p>具體原理可以參考這兩篇文章：</p>
+<ul>
+<li><a href="https://superuser.com/a/169055" target="_blank" rel="noopener noreferrer nofollow">What’s the difference between ^C and ^D for UNIX/Mac OS X terminal?</a></li>
+<li><a href="https://stackoverflow.com/a/4217070" target="_blank" rel="noopener noreferrer nofollow">Catch Ctrl-C in C</a></li>
+</ul>
+<h3>爲什麼按鍵都沒有反饋？</h3>
+<p>剛剛接觸<code>bash</code>的時候有一件比無法停止程式更令人抓狂的事情，那就是終端在毫無徵兆的情況下無法輸入任何東西，即使使用上面提到的兩個快捷鍵也全然沒有響應。這種情況讓筆者一度以爲自己的電腦或者鍵盤壞了。
+不過不用擔心，發生這種情況很可能是誤觸了<code>&lt;Ctrl-S&gt;</code>，這個時候不妨嘗試一下通過按下<code>&lt;Ctrl-Q&gt;</code>來「解鎖」。其實在按下<code>&lt;Ctrl-S&gt;</code>後終端會一直記錄我們所輸入的內容，然後在按下<code>&lt;Ctrl-Q&gt;</code>的那一刻，所有的內容就一起輸入進來了。這項功能現在看起來好像意義不大，甚至有點影響使用體驗，那為什麼要設計它呢？下面引用<a href="https://unix.stackexchange.com/a/137846" target="_blank" rel="noopener noreferrer nofollow">這篇回答</a>：</p>
+<blockquote>
+<p>Long before there were computers, there were teleprinters (a.k.a. teletypewriters, a.k.a. teletypes). Think of them as roughly the same technology as a telegraph, but with some type of keyboard and some type of printer attached to them.</p>
+<p>Because teletypes already existed when computers were first being built, and because computers at the time were room-sized, teletypes became a convenient user interface to the first computers – type in a command, hit the send button, wait for a while, and the output of the command is printed to a sheet of paper in front of you.</p>
+<p>Software flow control originated around this era – if the printer couldn’t print as fast as the teletype was receiving data, for instance, the teletype could send an XOFF flow control command (Ctrl+S) to the remote side saying “Stop transmitting for now”, and then could send the XON flow control command (Ctrl+Q) to the remote side saying “I’ve caught up, please continue”.</p>
+<p>And this usage survives in Unix because modern terminal emulators are emulating physical terminals (like the vt100) which themselves were (in some ways) emulating teletypes.</p>
+</blockquote>
+<h3>屏幕內容太多了應該如何清除？</h3>
+<p>使用<code>&lt;Ctrl-L&gt;</code>便可以清除屏幕上的內容（但其實也就只是將顯示的內容清除了而已，向上翻頁依然是可以看到內容的，所以千萬不要想着用這種方法隱藏什麼信息啊(¬◡¬)✧）
+這項功能也要聯想到以前打字機的使用。最早的打字機將文字印在紙張上的時候紙張和打字機會發生相對位移，這個快捷鍵就可以在替換紙張的時候幫助打字機快速歸位。</p>
+<p>具體原理可以參考這篇文章：</p>
+<ul>
+<li><a href="https://askubuntu.com/a/434595" target="_blank" rel="noopener noreferrer nofollow">Ctrl+L in terminal</a></li>
+</ul>
+<p>希望這些內容能夠提升諸位使用<code>bash</code>的體驗:)</p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>
