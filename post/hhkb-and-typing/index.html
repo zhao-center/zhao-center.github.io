@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- standard meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+    <!-- title -->
+    <title>HHKB和文字輸入這件事 - 趙|ZHAO</title>
+    <link rel="icon" href="/favicon/favicon.png">
+    <!-- describe -->
+    <meta name="description" content="Happy Hacking Keyboard(HHKB) 可能是最具話題的鍵盤之一了，就連筆者這種對鍵盤沒有什麼追求的人也是久仰大名，很早就在心中埋下了想要擁有它的種子。獨特的靜電容技術，經典的鍵盤佈局，再加上多位大佬的信仰加持（如C++之父 Bjarne Stroustrup，自由軟件之父 Richard Stallman(RMS) 等等都有使用HHKB），更是讓這個鍵盤頗具傳奇如同宗教似的存在。與此同時更多的人不解HHKB的魅力，疑惑它究竟爲何人青睞。因此筆者希望以一個HHKB使用者的身份簡單地聊聊其優缺點以及甚麼人適合選擇它，順便再淺談一下文字輸入這件事。">
+    <meta name="author" content="拂衣">
+    <meta name="keywords" content="HHKB, touch typing">
+    <!-- CDN -->
+    <!-- highlight.js - Syntax highlighting for the Web -->
+    <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark.min.css" integrity="sha384-2mVv4U5XTQ0ho/MFZzqOUxDkbF3lvml7hD1lGfOXf3LqbpSPcBrg0Gic+c40NTem" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js" integrity="sha384-0H+01+wORQpYAMaLWyObzDlXZaG1Mgzrj0DsIDeQX762Cfo2fPEycKxVmhlDjSV4" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          document.querySelectorAll('pre code').forEach((block) => {
+            block.style.padding = "1.25em 1.5em";
+            hljs.highlightBlock(block);
+          });
+        });
+    </script>
+    <!-- MathJax - A JavaScript display engine for mathematics -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" integrity="sha384-fNl9rj/eK1wEYfKc26CbPM6qkVQ+9MvYaoAFNql4ulbjBEWV2XLNP1UB8jQTtSe3" crossorigin="anonymous"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    
+<header class="menu">
+<div style="max-width: 70em; margin: 0 auto; padding: 0 0.6em; text-align: center; display: flex; justify-content: space-between; align-items: center; height: calc(64px + 2em)">
+    <a href="/">
+        <img style="width: 64px; height: 64px; vertical-align: middle" src="/favicon/favicon.png" alt="website logo">
+    </a>
+    <div>
+        <a href="/">首頁</a> | <a href="/archives">歸檔</a> | <a href="/about">關於</a>
+    </div>
+</div>
+</header>
+
+<div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
+
+<header style="text-align: center">
+    <h1>HHKB和文字輸入這件事</h1>
+    <h4><time datetime="2021-02-16">2021-02-16</time> | 拂衣</h4>
+</header>
+
+<div>
+    <p><a href="https://en.wikipedia.org/wiki/Happy_Hacking_Keyboard" target="_blank" rel="noopener noreferrer nofollow">Happy Hacking Keyboard(HHKB)</a> 可能是最具話題的鍵盤之一了，就連筆者這種對鍵盤沒有什麼追求的人也是久仰大名，很早就在心中埋下了想要擁有它的種子。獨特的靜電容技術，經典的鍵盤佈局，再加上多位大佬的信仰加持（如C++之父 Bjarne Stroustrup，自由軟件之父 Richard Stallman(RMS) 等等都有使用HHKB），更是讓這個鍵盤頗具傳奇如同宗教似的存在。與此同時更多的人不解HHKB的魅力，疑惑它究竟爲何人青睞。因此筆者希望以一個HHKB使用者的身份簡單地聊聊其優缺點以及甚麼人適合選擇它，順便再淺談一下文字輸入這件事。</p>
+<h1>購入原因</h1>
+<p>在具體評介HHKB的優缺點之前，容筆者先簡單地說明一下購入原因。上面提到過，筆者對於鍵盤本身並沒有什麼要求，平常有什麼鍵盤就用什麼鍵盤。一般的 Amazon Basics 或者 Microsoft 的工作套件就非常滿意了，甚至和機械鍵盤相比筆者更喜歡薄膜鍵盤的那種鍵程短的輸入手感。筆者曾經在日常一直都是使用全尺寸鍵盤，但作爲一個幾乎大部分時間都只用CLI或者更具體一點 Vim + Tmux 的人來說，筆者的雙手只會放在鍵盤的左側，右側的部分從到手之後就再也沒用過了，與此同時數字上方function鍵的使用頻率也幾乎爲零。長此以往鍵盤右側和上側便成了累贅，於是便萌生了換一個小一點鍵盤的想法。因爲久仰HHKB大名又正值其最新一代的推出，於是就想着購入了最新一代無刻印的 HHKB Professional Classic 試試，沒想到如今愛不釋手。其實筆者最喜歡的還是Type-S，但是最新一代的Type-S都只有Bluetooth版本的，鍵盤作爲一個重要的輸入設備，無線模塊絕對會大大降低其安全性，所以筆者真心希望PFU可以像以前一樣推出一個不帶Bluetooth的Type-S鍵盤。</p>
+<h1>HHKB評介</h1>
+<p>那麼到手之後的感覺如何呢？說實話，剛拿到的時候是相當失望的。因爲到手之後不但出現四個腳墊不平的問題，而且還有兩個按鍵的手感和其它按鍵存在極大的差異。這種情況筆者在那些量產的辦公用鍵盤上都未曾遇到過，更何況在購買之前筆者已經看過很多相關測評充值信仰，HHKB早已和高質量畫上了等號。如此一來，其高大的形象瞬間崩塌。於是又上網搜索，發現確實很多質疑HHKB品控的評論，思考再三筆者決定先用用看，如果不行再進行退換也不遲。仔細觀察之後，筆者發現腳墊不平是因爲膠水塗抹不勻導致，於是稍作矯正便修復了這個問題，按鍵手感不同的問題也在大約24小時的高強度使用之後漸漸消失了。因此根據筆者的體驗，HHKB的硬件質量確實是過硬的，但是其組裝水平屬實不敢恭維，而且很可能根本不存在出廠調校。除去以上提到的這些問題，這款鍵盤在筆者心中幾乎可以稱之爲完美，如果你想對HHKB有更多的瞭解可以看看下面這個官方的宣傳視頻，網絡上也已經有很多寫得很好的評測文章了。對於HHKB的特性就不再花過多篇幅追述了，但除此之外依然有些想單獨說說的感受，且讓筆者在下文慢慢道來。</p>
+<div class="video-container"><iframe src="//www.youtube-nocookie.com/embed/W7LT3pIndLM" frameborder="0" allowfullscreen></iframe></div>
+<h2>HHKB與自由軟件</h2>
+<p>很多人購買HHKB可能是受RMS的影響，可能同時也是自由軟件的支持者，所以筆者有必要先說明一下最新一代HHKB的軟件問題。非常遺憾，目前最新一代的HHKB中所使用的firmware並非自由軟件而且目前也沒有任何開源替代，以往的HHKB大部分可以在更換硬件後刷入開源的<a href="https://github.com/tmk/tmk_keyboard" target="_blank" rel="noopener noreferrer nofollow">TMK</a>，所以對自由軟件有要求的用戶建議選購TMK支持的舊款型號。不過根據<a href="https://geekhack.org/index.php?topic=106213.0" target="_blank" rel="noopener noreferrer nofollow">TMK作者hasu大佬的情報</a>，最新一代的HHKB未來很有可能在不拆機的情況下使用開源的firmware，至於後續如何讓我們拭目以待。</p>
+<h2>HHKB的佈局優勢與便攜性</h2>
+<p>HHKB能受到特定人羣青睞的最大原因就是其鍵盤佈局了，這種佈局的易用程度很難用文字來描述，其官方視頻中也幾乎已經把它的優點悉數介紹了，筆者只能說Vim/Emacs用戶用了之後就多半回不去了。至於其便攜性，HHKB作爲一個相對小巧的鍵盤，本身也是以便攜性爲賣點，所以各位看官肯定以爲筆者要誇讚它的便攜性了。其實不然，因爲沒有HHKB的時候帶着一個筆記本就可以出門了，但如今總是想帶着鍵盤一起，這還是挺令人困擾的。</p>
+<h2>Type-S與否？</h2>
+<p>筆者主觀上更喜歡Type-S，普通的版本按鍵聲音實在太大，如果旁邊有人是絕對會影響對方的。當然如果平常不打擾他人的情況下，普通版本的鍵盤敲擊聲聽久了也是很悅耳的。</p>
+<h2>無刻印有什麼用？</h2>
+<p>很多人認爲無刻印除了看起來很帥以外沒有什麼實際用處，筆者認爲這種想法對也不對。因爲盲打(Touch typing)作爲擁有良好鍵盤使用習慣用戶的必備技能，正常情況下使用者並不應該有機會看到按鍵上的刻印，這樣一想有刻印反而顯得有些多餘了，相反無刻印的鍵帽則可以幫助使用者更好的練習盲打。當然使用無刻印鍵盤的最大困難可能是單手輸入了，如果想要在其上進行單手輸入便需要掌握單手盲打的技巧，這可能對絕大部分人來說是十分困難的。當然，筆者本身就會盲打，購買無刻印的唯一原因就是好看。後文也會分享一些筆者關於盲打和文字輸入的小小體會。</p>
+<h1>誰適合選擇HHKB</h1>
+<p>總的來說，HHKB的受衆知道自己的需求而選擇它，又或者說HHKB選擇了它的用戶。不能理解爲什麼要買HHKB的人可能並不適合它，當其它鍵盤開始無法滿足輸入的需求了，那HHKB便脫穎而出。</p>
+<h1>關於文字輸入</h1>
+<p>筆者認爲無論鍵盤多麼高級，其最終的輸入節奏都是由人決定的，掌握正確的盲打(<a href="https://en.wikipedia.org/wiki/Touch_typing" target="_blank" rel="noopener noreferrer nofollow">Touch typing</a>)指法無論使用何種鍵盤都能如魚得水，對提升文字輸入的體驗也是大有裨益。而盲打也是駕馭HHKB的基本條件了。如今藉助盲打練習網站的幫助，我們通常可以在很短的時間內掌握這項技能。下面筆者推薦兩個練習盲打的網站：</p>
+<ul>
+<li><a href="https://keybr.com/" target="_blank" rel="noopener noreferrer nofollow">keybr</a> 適合已經知道該如何盲打只是想提升速度的人</li>
+<li><a href="https://www.typingclub.com/" target="_blank" rel="noopener noreferrer nofollow">TypingClub</a> 則適合從零開始的初學者</li>
+</ul>
+<p>除了勤於練習以外，良好的坐姿也更有利於提升打字速度以及塑造正確的肌肉記憶。學會盲打之後的文字輸入便可以更偏向文字本身而不受到輸入工具的牽絆，無論我們使用何種輸入工具和方法其最終目的都應該是服務於內容本身。在此筆者衷心希望各位看官都能找到自己鐘意的文字輸入工具，並以此創造出更好的內容٩( ‘ω’ )و </p>
+
+</div>
+
+</div>
+<footer class="info">
+    <div style="padding: 3rem 1.5rem 6rem; text-align: center">
+        <!-- Creative Commons -->
+        <div>若未作額外聲明<a href="//zhao.center">「ZHAO.CENTER」</a>之文章均可遵照 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer nofollow">CC-BY-4.0</a> 轉載。</div>
+        <!-- MIT License -->
+        <div>本站<a href="//zhao.center">「ZHAO.CENTER」</a>之代碼受 <a rel="license" href="https://github.com/zhao-center/zhao-center.github.io/blob/master/LICENSE" target="_blank" rel="noopener noreferrer nofollow">MIT License</a> 保護。</div>
+        <!-- Site Info -->
+        <div>© <a href="">拂衣</a> | by <a href="https://moedev.org/" target="_blank" rel="noopener noreferrer nofollow">MOEDEV</a>'s <a href="https://gitlab.com/moedev-org/sssg" target="_blank" rel="noopener noreferrer nofollow">SSSG</a> and <a href="">Yin</a> with ❤</div>
+    </div>
+</footer>
+
+
+</body>
+
+</html>
