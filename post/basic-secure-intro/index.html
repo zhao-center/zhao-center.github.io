@@ -12,7 +12,7 @@
     <!-- describe -->
     <meta name="description" content="「經典」、「自由」、「生活」">
     <meta name="author" content="拂衣">
-    <meta name="keywords" content="yubico, 隱私, 加密, 安全, GPG, yubikey, usbarmory, pass, XMPP, OTR, OMEMO, Tor, I2P, Tails, Qubes OS">
+    <meta name="keywords" content="隱私, 加密, 安全, GPG, Yubico, YubiKey, USB Armory, pass, XMPP, OTR, OMEMO, Tor, I2P, Tails, Qubes OS">
     <!-- CDN -->
     <!-- highlight.js - Syntax highlighting for the Web -->
     <link media="(prefers-color-scheme: light)" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/foundation.min.css" integrity="sha512-RgUfG84wvjIwNHlKPU63D8S8IItsNhZZ5kfjpvhGAfr529lt67Ys4/2RAA/NYhsb2HBfcxUXMX3NEJswqpT1tg==" crossorigin="anonymous" />
@@ -67,8 +67,8 @@
 <ul>
 <li><a href="#yubikeyFirefoxU2F">讓FireFox支持使用U2F</a></li>
 <li><a href="#yubikeyGoogleAccount">與Google賬戶一起使用</a></li>
-<li><a href="#yubikeyGPG">GPG在yubikey的應用</a></li>
-<li><a href="#yubikeyDevelop">YubiKey的開發</a></li>
+<li><a href="#yubikeyGPG">GPG在YubiKey的應用</a></li>
+<li><a href="#yubikeyDev">YubiKey的開發</a></li>
 </ul>
 </li>
 <li><a href="#usbarmory">USB Armory</a></li>
@@ -123,7 +123,7 @@
 <h1><h id="hardware"> 加密硬件 </h></h1>
 <h2><h id="Yubikey"> Yubikey </h></h2>
 <p><a href="https://en.wikipedia.org/wiki/YubiKey" target="_blank" rel="noopener noreferrer nofollow">YubiKey</a>由Yubico公司製作，在加密硬件中屬於比較知名的產品，價錢雖然偏貴，但是爲了安全的網絡環境該掏的錢還是得掏啊。Yubiey的亮點是通過輕觸自動輸入密鑰，實現了加密的安全與便捷，讓賬戶的安全係數提升一個等級。</p>
-<p>yubico比較實用的功能就是其支持<a href="https://www.yubico.com/about/background/fido/" target="_blank" rel="noopener noreferrer nofollow">U2F</a>(Universal 2nd Factor)技術。簡單來說，U2F是種開放的驗證標準，便於使用者通過外部設備進行簡單且強大的二次驗證。當然這項技術需要軟件的支持，具體可以從官方提供的列表中查看，目前支持的公司有Google、Facebook、Windows等。下面提供一些具體的使用方法：</p>
+<p>YubiKey比較實用的功能就是其支持<a href="https://www.yubico.com/about/background/fido/" target="_blank" rel="noopener noreferrer nofollow">U2F</a>(Universal 2nd Factor)技術。簡單來說，U2F是種開放的驗證標準，便於使用者通過外部設備進行簡單且強大的二次驗證。當然這項技術需要軟件的支持，具體可以從官方提供的列表中查看，目前支持的公司有Google、Facebook、Windows等。下面提供一些具體的使用方法：</p>
 <h3><h id="yubikeyFirefoxU2F"> 讓FireFox支持使用U2F </h></h3>
 <p>在Firefox中瀏覽支持U2F的網站需要插件的支持</p>
 <ul>
@@ -134,20 +134,21 @@
 <ul>
 <li><a href="https://www.yubico.com/support/knowledge-base/categories/articles/how-to-use-your-yubikey-with-google/" target="_blank" rel="noopener noreferrer nofollow">HOW TO USE YOUR YUBIKEY WITH GOOGLE</a></li>
 </ul>
-<h3><h id="yubikeyGPG"> GPG在yubikey的應用 </h></h3>
-<p>將GPG密鑰存儲到yubikey中，使GPG的使用更加方便，每次插入yubikey並且輸入密碼之後就可以解密，再也不用發愁GPG密鑰的存儲問題了～當然，如果有能力保存密鑰的朋友還是可以將密鑰存儲在一個相對安全的環境，避免因yubikey的損壞造成GPG密鑰的丟失。</p>
+<h3><h id="yubikeyGPG"> GPG在YubiKey的應用 </h></h3>
+<p>將GPG密鑰存儲到YubiKey中，使GPG的使用更加方便，每次插入YubiKey並且輸入密碼之後就可以解密，再也不用發愁GPG密鑰的存儲問題了～當然，如果有能力保存密鑰的朋友還是可以將密鑰存儲在一個相對安全的環境，避免因YubiKey的損壞造成GPG密鑰的丟失。</p>
 <ul>
-<li><a href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-openpgp/#generateopenpgp" target="_blank" rel="noopener noreferrer nofollow">在yubikey裏面生成GPG密鑰</a></li>
+<li><a href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-openpgp/#generateopenpgp" target="_blank" rel="noopener noreferrer nofollow">在YubiKey裏面生成GPG密鑰</a></li>
 </ul>
-<h3><h id="yubikeyDevelop"> YubiKey的開發 </h></h3>
-<p>如果想要折騰的同學也可以查看yubico官方的github頁面</p>
+<h3><h id="yubikeyDev"> YubiKey的開發 </h></h3>
+<p>如果想要折騰的同學也可以查看Yubico官方的GitHub頁面</p>
 <ul>
-<li><a href="https://github.com/Yubico" target="_blank" rel="noopener noreferrer nofollow">Yubico的github頁面</a></li>
+<li><a href="https://github.com/Yubico" target="_blank" rel="noopener noreferrer nofollow">Yubico的GitHub頁面</a></li>
 </ul>
 <h2><h id="usbarmory"> USB Armory </h></h2>
 <p>USB Armory 是一個可以隨身攜帶的小型電腦，可以用來運行完整的GNU/Linux，開源的硬件設計也讓它更加可信。</p>
 <ul>
-<li><a href="https://inversepath.com/usbarmory.html" target="_blank" rel="noopener noreferrer nofollow">USB Armory</a></li>
+<li><a href="https://inversepath.com/usbarmory.html" target="_blank" rel="noopener noreferrer nofollow">USB Armory 官網</a></li>
+<li><a href="https://archlinuxarm.org/platforms/armv7/freescale/usb-armory-mk-ii" target="_blank" rel="noopener noreferrer nofollow">USB Armory 的 Arch Linux 安裝教程</a></li>
 </ul>
 <h1><h id="email"> Email服務 </h></h1>
 <h2><h id="protonmail"> Protonmail </h></h2>
