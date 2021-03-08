@@ -7,10 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
     <!-- title -->
-    <title>計算機基礎入門指南 - 趙|ZHAO</title>
+    <title>初學者談計算機精神 - 趙|ZHAO</title>
     <link rel="icon" href="/favicon/favicon.png">
     <!-- describe -->
-    <meta name="description" content="「經典」、「自由」、「生活」">
+    <meta name="description" content="本篇曾是題爲「計算機基礎入門指南」一文中的內容，因爲那篇文章多數內容已經過於陳舊甚至有些誤人子弟所以決定將其刪除，但是唯獨這一部分令筆者頗有感觸，遂略微修改後予以保留。本文儘量保留當年的原汁原味，因此內容略爲粗糙，但論述頗爲有趣，以此紀念。">
     <meta name="author" content="拂衣">
     <meta name="keywords" content="初學者, 計算機, GNU, Linux, Vim, Atom, Git">
     <!-- CDN -->
@@ -48,87 +48,28 @@
 <div style="max-width: 70em; margin: 0 auto; padding: 3em 1.5em">
 
 <header style="text-align: center">
-    <h1>計算機基礎入門指南</h1>
-    <h4><time datetime="2017-03-09">2017-03-09</time> | 拂衣</h4>
+    <h1>初學者談計算機精神</h1>
+    <h4><time datetime="2017-01-19">2017-01-19</time> | 拂衣</h4>
 </header>
 
 <div>
-    <h1>目錄</h1>
-<ul>
-<li><a href="#intro">引言</a></li>
-<li><a href="#system">系統</a>
-<ul>
-<li><a href="#gnu">GNU/Linux</a></li>
-</ul>
-</li>
-<li><a href="#tool">工具</a>
-<ul>
-<li><a href="#vim">Vim</a></li>
-<li><a href="#atom">Atom</a></li>
-<li><a href="#git">Git</a></li>
-</ul>
-</li>
-<li><a href="#resource">資源</a></li>
-<li><a href="#sum">總結</a></li>
-</ul>
+    <p>本篇曾是題爲「計算機基礎入門指南」一文中的內容，因爲那篇文章多數內容已經過於陳舊甚至有些誤人子弟所以決定將其刪除，但是唯獨這一部分令筆者頗有感觸，遂略微修改後予以保留。本文儘量保留當年的原汁原味，因此內容略爲粗糙，但論述頗爲有趣，以此紀念。</p>
 <h1><h id="intro"> 引言 </h></h1>
-<p>這是筆者恢復網站之後所寫的第一篇文章，由於現在對<a href="https://zhao.center/post/markdown-test/" target="_blank" rel="noopener noreferrer nofollow">Markdown</a>的掌握還並不熟練,可能還無法寫出真正漂亮的文章，但是筆者會盡力去做好，不斷的完善自己。</p>
-<p>說這麼多其實做人做事都需要不斷完善自己，學習計算機知識也不例外。很多人從小開始接觸電腦，但可能直到現在對於計算機(computer)的奧妙也一無所知，很多朋友問我學習計算機知識應該如何入門？作爲一個剛剛窺視到一點計算機奧妙的人，筆者今天爲大家也爲自己梳理一下，學習哪些知識才能真正的入門計算機。本文爲簡介文章，爲省去不必要廢話，文章結構略顯粗略，大部分知識和解答都能在官方文件中找到。</p>
-<h1><h id="system"> 你需要一個好系統(Operating System)加上一點自由(Libre)的精神 </h></h1>
-<h2><h id="gnu"> GNU/Linux </h></h2>
-<p>如果要讓筆者敘述入門計算機知識最應該瞭解的是什麼，那一定是<a href="https://en.wikipedia.org/wiki/GNU" target="_blank" rel="noopener noreferrer nofollow">GNU</a>，一個自由的操作系統(Operating System)，鄙人不敢保證這是每個高手都用的系統，但是這一定是每個高手都瞭解的系統。如今很多人稱這個系統爲Linux，但是其實我們更應該稱之爲GNU或者GNU/Linux，或者我們可以說Linux是最常見的一類GNU系統。GNU是一個自由軟件（<a href="https://en.wikipedia.org/wiki/Free_software" target="_blank" rel="noopener noreferrer nofollow">Free Software</a>）的集合，最早由自由軟件之父「<a href="https://stallman.org/" target="_blank" rel="noopener noreferrer nofollow">Richard Stallman</a>」先生提出（他的生平在<a href="https://en.wikipedia.org/wiki/Richard_Stallman" target="_blank" rel="noopener noreferrer nofollow">這裏</a>），直到如今他依然奮戰在自由軟件的最前沿。而Linux本身其實是一個開源的內核(Kernel)，通俗的說是連接軟件與硬件的紐帶，它的出現使得各自發育的單一GNU項目融合成了一個整體，給自由軟件注入了新的生命，我們所說的Linux操作系統其實是指基於Linux內核的GNU操作系統，現在之所以大家更加熟悉Linux的原因筆者認為有二：一是有些帶有商業目的的誤導性宣傳（下文有提及），二是Linux這個名字可能確實好聽一些吧。</p>
-<p>筆者總是覺得，當你追求自由的時候你便是自由的，但是通過和很多人探討，發現身邊很多的人並不會在意自己的信息安全，甚至有些人覺得政府或者公司收集個人信息理所應當。筆者認爲這些多半是由於大多數人對於計算機的哲學並不瞭解，以及現代公司與企業的誤導性宣傳，舉個例子：現在世界知名的科技公司如微軟(Microsoft)、蘋果公司(Apple)這樣的企業，會向人們強調開源(Open Source)的重要性，而不去提及自由軟件(Free Software)很多人甚至沒有聽說過自由軟件(Free Software)的說法。自由軟件確實影響到了很多人的利益，而且最為知名的自由軟件協議GPL的條款也確實很激進，有些條款筆者也不一定能完全認同，但是這也是一種無奈下的產物，畢竟現在了解自由軟件的人還是太少了，而且傳播自由軟件還是存在很大阻力。個人還是比較推崇更加傳統的MIT協議，筆者認為這個協議更符合自由軟件的精神，可能在未來會寫一篇關於MIT協議的文章。</p>
-<p>當人們如果瞭解了這背後的意義，再做出的選擇無論是選擇自由軟件(Free Software)，還是選擇專有軟件(Proprietary software)都凸顯了作爲一個有獨立之人格的人的自由意志，但是我們也知道無論是從政府和公司的阻力，還是個人的接受能力來說，讓大部分瞭解或者學習這些知識是很難的，所以希望各位在未來的道路上可以去傳播並踐行這些計算機的哲學思想。具體筆者就不去展開了，這篇只是入門級文章，所以筆者在下面列幾篇文章供大家參考，以後筆者也會慢慢補充：</p>
+<p>這是筆者恢復網站之後所寫的第一篇文章，由於現在對<a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener noreferrer nofollow">Markdown</a>的掌握還並不熟練，可能還無法寫出真正漂亮的文章，但是筆者會盡力去做好，不斷的完善自己。</p>
+<p>說這麼多其實做人做事都需要不斷完善自己，學習計算機知識也不例外。很多人從小開始接觸電腦，但可能直到現在對於計算機的奧妙也一無所知，很多朋友問我學習計算機知識應該如何入門？作爲一個剛剛窺視到一點計算機奧妙的人，筆者認爲掌握計算機精神比學習具體的技術更加重要，今天便藉「GNU/Linux與自由之精神」抒發一下對於計算機精神的理解。</p>
+<h1><h id="system"> GNU/Linux與自由之精神 </h></h1>
+<p>筆者認爲計算機的精神就是自由的精神，因爲計算機的世界中有着無限的創造力，而瞭解計算機精神最直接的方法就是使用<a href="https://en.wikipedia.org/wiki/GNU" target="_blank" rel="noopener noreferrer nofollow">GNU</a>。GNU是一個自由的操作系統(Operating System)，鄙人不敢保證這是每個計算機高手都用的系統，但是這一定是每個高手都瞭解的系統。如今很多人稱這個系統爲Linux，但這是不全面的，我們更應該稱之爲GNU或者GNU/Linux。GNU是一個自由軟件（<a href="https://en.wikipedia.org/wiki/Free_software" target="_blank" rel="noopener noreferrer nofollow">Free Software</a>）的集合，最早由自由軟件之父「<a href="https://stallman.org/" target="_blank" rel="noopener noreferrer nofollow">Richard Stallman</a>」先生提出（他的生平在<a href="https://en.wikipedia.org/wiki/Richard_Stallman" target="_blank" rel="noopener noreferrer nofollow">這裏</a>），直到如今他依然奮戰在自由軟件的最前沿。而Linux本身其實是一個開源的內核(Kernel)，通俗的說是連接軟件與硬件的紐帶，它的出現使得各自發育的單一GNU項目融合成了一個整體，給自由軟件注入了新的生命，我們所說的Linux操作系統其實是指基於Linux內核的GNU操作系統，現在之所以大家更加熟悉Linux的原因筆者認為有二：一是有些帶有商業目的的誤導性宣傳（下文有提及），二是Linux這個名字可能確實好聽一些吧。</p>
+<p>筆者總是覺得，當你追求自由的時候你便是自由的，但是通過和很多人探討，發現身邊很多的人並不會在意自己的信息安全，甚至有些人覺得政府或者公司收集個人信息理所應當。這些多半是由於大多數人對於計算機的哲學並不瞭解，以及現代公司與企業的誤導性宣傳，舉個例子：現在世界知名的科技公司如微軟(Microsoft)、蘋果公司(Apple)這樣的企業，會向人們強調開源(Open Source)的重要性，而不去提及自由軟件(Free Software)很多人甚至沒有聽說過自由軟件(Free Software)的說法。自由軟件確實影響到了很多人的利益，而且最為知名的自由軟件協議GPL的條款也確實很激進，有些條款筆者也不一定能完全認同，但是這也是一種無奈下的產物，畢竟現在了解自由軟件的人還是太少了，而且傳播自由軟件還是存在很大阻力。個人還是比較推崇更加傳統的MIT協議，筆者認為這個協議更符合自由軟件的精神，可能在未來會寫一篇關於MIT協議的文章。</p>
+<p>當人們如果瞭解了這背後的意義，再做出的選擇無論是選擇自由軟件(Free Software)，還是選擇專有軟件(Proprietary software)都凸顯了作爲一個有獨立之人格的人的自由意志。但是我們也知道無論是從政府和公司的阻力，還是個人的接受能力來說，讓大部分瞭解或者學習這些知識是很難的，所以希望各位在未來的道路上可以去傳播並踐行這些計算機的哲學思想。具體就在這裏展開了，下列幾個網站可供大家延伸閱讀，以後筆者也會慢慢補充：</p>
 <ul>
 <li><a href="https://www.gnu.org/philosophy/free-software-for-freedom.en.html" target="_blank" rel="noopener noreferrer nofollow">爲什麼自由軟件比開源軟件好</a></li>
 <li><a href="https://stallman.org/" target="_blank" rel="noopener noreferrer nofollow">自由軟件之父的個人網站</a></li>
 <li><a href="https://www.fsf.org/" target="_blank" rel="noopener noreferrer nofollow">自由軟件基金會官網</a></li>
 <li><a href="https://www.gnu.org" target="_blank" rel="noopener noreferrer nofollow">GNU操作系統官網</a></li>
 </ul>
-<p>去瞭解這些內容，你一定會受益匪淺，這些網站中有很多豐富的資源靜待我們挖掘。</p>
-<h1><h id="tool"> 你需要一些好工具 </h></h1>
-<h2><h id="vim"> Vim </h></h2>
-<blockquote>
-<p>據說：世界上的程序員分三種，一種使用Emacs，一種使用vim，剩餘的是其它。</p>
-</blockquote>
-<p>鄙人不才，還尚未學會<a href="https://en.wikipedia.org/wiki/Emacs" target="_blank" rel="noopener noreferrer nofollow">Emacs</a>，但是對於<a href="https://en.wikipedia.org/wiki/Vim_(text_editor)" target="_blank" rel="noopener noreferrer nofollow">vim</a>可以算是摸清了點門道。很多人說它是史上最好的文本編輯器(Editor)，我無法證明，但是我更願意說它是一種習慣、一種精神，vim的強大之處在於它不單單是個編輯器(Editor)它更是一種語言、一種習慣。它代表着簡潔、高效、優雅的文字輸入態度和習慣，對於vim的學習是從建立規矩到打破規矩的過程，一開始你會發現vim有多種模式、不同的命令，到後來你的眼中只會留存一種說話的方式。</p>
-<p>以下鏈接可以供諸位參考學習：</p>
-<ul>
-<li><a href="http://www.vim.org/" target="_blank" rel="noopener noreferrer nofollow">vim官網</a></li>
-</ul>
-<h2><h id="atom"> Atom </h></h2>
-<p>Atom是一款由Github開發的編程神器，是一款完全由web技術構建的編輯器。筆者在編寫這個網站代碼的時候就是使用了這款編輯器，無論是從界面風格還是使用手感都非常的清爽，加上和Github的完美融合（這部分並沒有親自體驗過）以及充值信仰的角度。。。Atom無疑是一匹黑馬。</p>
-<p>以下鏈接可以供諸位參考學習：</p>
-<ul>
-<li><a href="https://atom.io/" target="_blank" rel="noopener noreferrer nofollow">Atom官網</a></li>
-</ul>
-<h2><h id="git"> Git </h></h2>
-<p>Git是世界上最先進的VCS(Version Control System)，而你聽說或者沒聽說過的Github就是使用這項技術的商業公司。Git的強大不光在於功能，更多的是因爲git是一個不妥協的產物：</p>
-<blockquote>
-<p>In 2005, the relationship between the community that developed the Linux kernel and the commercial company that developed BitKeeper broke down, and the tool’s free-of-charge status was revoked. This prompted the Linux development community (and in particular Linus Torvalds, the creator of Linux) to develop their own tool based on some of the lessons they learned while using BitKeeper.</p>
-</blockquote>
-<p>正是這樣的經歷造就了git，也成就了github，讓我們現在只要鏈接互聯網就可以看到<a href="https://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank" rel="noopener noreferrer nofollow">Linus Torvalds</a>先生的傑作<a href="https://github.com/torvalds" target="_blank" rel="noopener noreferrer nofollow">Linux</a>。</p>
-<p>以下鏈接可以供諸位參考學習：</p>
-<ul>
-<li><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer nofollow">Git官網</a></li>
-<li><a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer nofollow">Git官方文件</a></li>
-</ul>
-<h1><h id="resource"> 你需要一些好資源 </h></h1>
-<p>筆者時常聽別人說有人報班學習計算機知識，我非常的不解，因爲可以說網絡上基本能學習所有的計算機知識，如果非要說什麼不是很容易從網上學習到，那可能就是計算機科學領域的Algorithm和Philosophy了。你所需要的就是一些好的資源，見下面列表。不過，筆者認爲相比之下之前GNU/Linux那部分給出的資源更加重要。</p>
-<p>普遍需要了解的資料：</p>
-<ul>
-<li><a href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer nofollow">維基百科(Wikipedia)</a></li>
-</ul>
-<p>「編程」相關資料：</p>
-<ul>
-<li><a href="https://www.tutorialspoint.com/" target="_blank" rel="noopener noreferrer nofollow">tutorialspoint</a></li>
-<li><a href="https://www.sololearn.com/" target="_blank" rel="noopener noreferrer nofollow">Sololearn</a></li>
-<li><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer nofollow">W3schools</a></li>
-</ul>
+<p>去瞭解這些內容，你一定會受益匪淺，這些網站中有很多豐富的資源靜待我們挖掘。順便一提，以上鏈接中都是英文內容，必須承認的是絕大部分計算機相關的項目也都是以英文爲主的。筆者認爲出現這種現象不單單是因爲英文在各個領域的廣泛使用，更與計算機誕生歷史息息相關。計算機爲英語國家創造，其中必然有難解難分的糾葛，計算機思維就是英語系國家思維的延伸，而如今的科學又何嘗不是如此呢。</p>
 <h1><h id="sum"> 總結 </h></h1>
-<p>有些人點開鏈接的時候可能會傻眼，因爲鏈接的頁面幾乎全部是英文，有部分帶中文翻譯的。之所以出現這種情況，原因有二：一是，計算機爲英語國家創造，其中必然有難解難分的糾葛，計算機思維就是英語系國家思維的延伸。二是，幾乎所有計算機類文章，英文都是官方原文檔所用語言，所以爲一手資料，也最爲詳盡。所以筆者以前會同意，對於計算機知識的學習掌握英語是很有必要的，但是現在我更加認爲，學計算機其實更多的是和計算機交流，所以說用計算機的語言（這裏不是指計算機語言）去學習計算機知識才更爲貼切。</p>
-<p>學習任何東西都不是一蹴而就的，我們需要不斷的追尋和探索，筆者只是「初出茅廬」有什麼說的不對的、不全面的希望諸君指正，有什麼能夠補充的也希望各位看客不要吝惜網費，給我發郵件～</p>
-<p>（文章待續～）</p>
+<p>以上是筆者對於計算機精神的一點拙見，希望能夠看到更多使用GNU/Linux的小夥伴。學習任何東西都不是一蹴而就的，我們需要不斷的追尋和探索，長此以往才能有更多的感悟。筆者只是「初出茅廬」有什麼說的不對或不全面的還望諸君指正～</p>
 
 </div>
 

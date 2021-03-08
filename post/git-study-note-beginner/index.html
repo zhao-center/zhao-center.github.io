@@ -79,7 +79,7 @@
 <li><a href="#sum">總結</a></li>
 </ul>
 <h1><h id="intro"> 簡介 </h></h1>
-<p><a href="https://en.wikipedia.org/wiki/Git" target="_blank" rel="noopener noreferrer nofollow"><code>git</code></a>是如今最為著名的<a href="https://en.wikipedia.org/wiki/Distributed_version_control" target="_blank" rel="noopener noreferrer nofollow">「Distributed Version Control Systems」</a>它是由被稱為「Linux之父」的<a href="https://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank" rel="noopener noreferrer nofollow">「Linus Torvalds」</a>先生於2005年製作的。<code>git</code>誕生的歷史融合了計算機大師的自嘲和自由軟件開發者的反抗精神，是令筆者非常敬佩的。下面引用維基百科中文版對這段故事的描述（原文鏈接<a href="https://zh.wikipedia.org/wiki/Git#.E6.AD.B7.E5.8F.B2" target="_blank" rel="noopener noreferrer nofollow">這裡</a>，英文版本鏈接<a href="https://en.wikipedia.org/wiki/Git#History" target="_blank" rel="noopener noreferrer nofollow">這裡</a>）：</p>
+<p><a href="https://en.wikipedia.org/wiki/Git" target="_blank" rel="noopener noreferrer nofollow"><code>git</code></a>是如今最為著名的 <a href="https://en.wikipedia.org/wiki/Distributed_version_control" target="_blank" rel="noopener noreferrer nofollow">DVCS (Distributed Version Control Systems)</a>，它是由被稱為「Linux之父」的<a href="https://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank" rel="noopener noreferrer nofollow">「Linus Torvalds」</a>先生於2005年製作的。<code>git</code>不但有強大的功能，更是一個不妥協的產物，其誕生的歷史融合了計算機大師的自嘲和自由軟件開發者的反抗精神，令筆者非常敬佩。下面引用維基百科中文版對這段軼事的描述（原文鏈接<a href="https://zh.wikipedia.org/wiki/Git#.E6.AD.B7.E5.8F.B2" target="_blank" rel="noopener noreferrer nofollow">這裡</a>，英文版本鏈接<a href="https://en.wikipedia.org/wiki/Git#History" target="_blank" rel="noopener noreferrer nofollow">這裡</a>）：</p>
 <blockquote>
 <p>自2002年開始，林纳斯·托瓦兹（「Linus Torvalds」筆者注）決定使用BitKeeper作為Linux內核主要的版本控制系統用以维护程式碼。因為BitKeeper為專有軟體，這個決定在社群中長期遭受質疑。在Linux社群中，特別是理查德·斯托曼（「Richard Stallman」筆者注）與自由軟體基金會的成員，主張應該使用開放原始碼的軟體來作為Linux核心的版本控制系統。林纳斯·托瓦兹曾考慮過採用現成軟體作为版本控制系統（例如Monotone），但這些軟體都存在一些問題，特別是效能不佳。現成的方案，如CVS的架構，受到林纳斯·托瓦兹的批評。</p>
 <p>2005年，安德魯·垂鳩（「Andrew Tridgell」筆者注）寫了一個簡單程式，可以連接BitKeeper的儲存庫，BitKeeper著作權擁有者拉里·麥沃伊（「Larry McVoy」筆者注）認為安德魯·垂鳩对BitKeeper內部使用的协议进行逆向工程，決定收回无偿使用BitKeeper的授權。Linux內核開發團隊與BitMover公司進行蹉商，但無法解決他們之間的歧見。林纳斯·托瓦兹決定自行開發版本控制系統替代BitKeeper，以十天的時間，編寫出第一個git版本。</p>
@@ -87,13 +87,14 @@
 <p><code>git</code>不僅僅是一個為程序員所用的版本控製程序，受到程序員群體的廣泛歡迎。如今更是成為了一個方便快捷的多人協作程序，很多資料的收集、文章的創作都是使用<code>git</code>完成的。這讓學習<code>git</code>的價值大大的增加，是學習生活必備良品。</p>
 <p>本篇文章和筆者一貫的教程文章思路是一致的，僅僅是快速入門的作用，想要真正深入細緻的學習筆者還是推薦閱讀官方手冊和大神們的資料，關於<code>git</code>的資料可以參考如下鏈接：</p>
 <ul>
-<li><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer nofollow">git官網</a></li>
+<li><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer nofollow">Git官網</a></li>
+<li><a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer nofollow">Git官方文檔</a></li>
 <li><a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener noreferrer nofollow">Pro Git Book</a></li>
 </ul>
 <p>知名的<code>git</code>服務提供網站：</p>
 <ul>
-<li><a href="https://github.com/" target="_blank" rel="noopener noreferrer nofollow">github</a></li>
-<li><a href="https://gitlab.com/" target="_blank" rel="noopener noreferrer nofollow">gitlab</a></li>
+<li><a href="https://github.com/" target="_blank" rel="noopener noreferrer nofollow">GitHub</a></li>
+<li><a href="https://gitlab.com/" target="_blank" rel="noopener noreferrer nofollow">GitLab</a></li>
 </ul>
 <p>以下是正文，望各位看官品閱，如有錯誤還請郵件指正～</p>
 <h1><h id="start"> 使用 </h></h1>
@@ -169,16 +170,16 @@ $ git commit -m &quot;one line commit&quot; #添加一個簡單的一行commit
 </code></pre>
 <p>這樣子如果在上述的情況下，那個文件就會直接被刪除掉，當然這是有一定風險的，所以需要各位看官在操作前仔細斟酌。</p>
 <h2><h id="step5"> 第五步：遠程管理 </h></h2>
-<p>提到<code>git</code>很多人都會想到<a href="https://github.com" target="_blank" rel="noopener noreferrer nofollow">github</a>，前文給出的鏈接中也有提到過，這是世界最為知名的<code>git</code>服務提供網站。很多時候我們使用<code>git</code>就需要會用到這些服務，所以學會遠程管理就顯得格外重要了。</p>
+<p>提到<code>git</code>很多人都會想到<a href="https://github.com" target="_blank" rel="noopener noreferrer nofollow">GitHub</a>，前文給出的鏈接中也有提到過，這是世界最為知名的<code>git</code>服務提供網站。很多時候我們使用<code>git</code>就需要會用到這些服務，所以學會遠程管理就顯得格外重要了。</p>
 <h3><h id="exist-remote"> 已經存在遠程repo </h></h3>
-<p>用github舉例，如果我們本身就有一個已經存在的「git repo」在github上，那我們先需要在本地<code>init</code>一個repo，裡面不需要放任何東西，然後輸入命令：</p>
+<p>用GitHub舉例，如果我們本身就有一個已經存在的「git repo」在GitHub上，那我們先需要在本地<code>init</code>一個repo，裡面不需要放任何東西，然後輸入命令：</p>
 <pre><code class="language-bash">$ git remote add origin &lt;URL&gt; #origin是一個我們可以修改的簡稱
 $ git remote -v #查看鏈接情況
 </code></pre>
-<p>這樣我們就鏈接了github上的repo，然後我們需要<code>pull</code>這個repo：</p>
+<p>這樣我們就鏈接了GitHub上的repo，然後我們需要<code>pull</code>這個repo：</p>
 <pre><code class="language-bash">$ git pull origin master #前者是remotename後者是branchname
 </code></pre>
-<p>通過這個命令我們就獲取了github上面的repo，那麼有人就會問，這個和<code>clone</code>有什麼區別，簡單的來說，<code>clone</code>只是單純的複製和這個repo本身沒有什麼關係，而<code>remote</code>命令建立了local和github之間的聯繫。當然，目前來看實現的結果大同小異。</p>
+<p>通過這個命令我們就獲取了GitHub上面的repo，那麼有人就會問，這個和<code>clone</code>有什麼區別，簡單的來說，<code>clone</code>只是單純的複製和這個repo本身沒有什麼關係，而<code>remote</code>命令建立了local和GitHub之間的聯繫。當然，目前來看實現的結果大同小異。</p>
 <p>最後只需要把修改過後的內容<code>push</code>上去就行了：</p>
 <pre><code class="language-bash">$ git push origin master
 </code></pre>
@@ -190,7 +191,7 @@ $ git reset --hard origin/master
 $ git pull origin master
 </code></pre>
 <h3><h id="exist-local"> 已經存在本地repo </h></h3>
-<p>相同的在上傳本地已有的repo也是一樣的道理，只不過這種情況下就需要在github上先新建一個空的repo了。簡單來說，<code>remote</code>的部分我們只需要先移動到本地的repo，然後：</p>
+<p>相同的在上傳本地已有的repo也是一樣的道理，只不過這種情況下就需要在GitHub上先新建一個空的repo了。簡單來說，<code>remote</code>的部分我們只需要先移動到本地的repo，然後：</p>
 <pre><code class="language-bash">$ git remote add origin &lt;URL&gt;
 $ git add .
 $ git commit -m &quot;Initial commit&quot;
